@@ -1,8 +1,11 @@
 const questions = [
   {
-    answer: 'St. Lucia',
-    choices: ['Belize', 'Singapore', 'Dominica', 'St. Lucia'],
-    flag: 'flag-data-here?',
+    answer: 'Saint Lucia',
+    choices: ['Belize', 'Singapore', 'Dominica', 'Saint Lucia'],
+  },
+  {
+    answer: 'Sri Lanka',
+    choices: ['Madagascar', 'Comoros', 'Guyana', 'Sri Lanka'],
   },
 ];
 

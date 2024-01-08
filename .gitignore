@@ -12,6 +12,7 @@ dist
 dist-ssr
 *.local
 quokka-sandbox.js
+src/draft-App.jsx
 
 # Editor directories and files
 .vscode/*

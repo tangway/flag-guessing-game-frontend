@@ -48,7 +48,6 @@ const SriLankaFlag = ({ animate, initial, transition, ...props }) => (
         stroke="#000000"
         strokeWidth={2.096}
         id="path223"
-        
       />
       <g
         transform="matrix(1.043538,0,0,1.018177,-40.191144,144.18553)"
