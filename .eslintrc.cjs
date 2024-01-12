@@ -34,6 +34,22 @@ module.exports = {
         unnamedComponents: 'arrow-function',
       },
     ],
-    quotes: ['error', 'single', 'backtick']
+    quotes: ['error', 'single'],
+    'no-console': 'off',
+    'no-unused-vars': ['error', { varsIgnorePattern: '^React$' }],
+    'import/no-extraneous-dependencies': [
+      'error',
+      {
+        devDependencies: [
+          'test.{ts,tsx,js,jsx}',
+          'test-*.{ts,tsx,js,jsx}',
+          '**/*{.,_}{test,spec}.{ts,tsx,js,jsx}',
+          '**/jest.config.{ts,js}',
+          '**/jest.setup.{ts,js}',
+          '**/*.stories.*',
+          '**/.storybook/**/*.*',
+        ],
+      },
+    ],
   },
 };
