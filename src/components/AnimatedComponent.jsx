@@ -1,33 +1,64 @@
+import React from 'react';
 import { useAnimation } from 'framer-motion';
+import { useEffect } from 'react';
 
-const AnimatedComponent = Component => props => {
+// // version with start and reset animation buttons
+// const AnimatedComponent = Component => props => {
+//   const controls = useAnimation();
+
+//   const handleStartClick = async () => {
+//     await controls.start({
+//       opacity: 1,
+//     });
+//   };
+
+//   const handleResetClick = () => {
+//     controls.set({ opacity: 0 });
+//   };
+
+//   return (
+//     <>
+//       <Component
+//         {...props}
+//         animate={controls}
+//         initial={{ opacity: 0 }}
+//         transition={{ duration: 2, ease: 'easeInOut' }}
+//       />
+//       <button type="button" onClick={handleStartClick}>
+//         Start Animation
+//       </button>
+//       <button type="button" onClick={handleResetClick}>
+//         Reset Animation
+//       </button>
+//     </>
+//   );
+// };
+
+// export default AnimatedComponent;
+
+// version without buttons and with useEffect triggered by startAnimation
+const AnimatedComponent = Component => ({ startAnimation, ...props }) => {
   const controls = useAnimation();
 
-  const handleStartClick = async () => {
-    await controls.start({
-      opacity: 1,
-    });
-  };
-
-  const handleResetClick = () => {
-    controls.set({ opacity: 0 });
-  };
+  useEffect(() => {
+    if (startAnimation) {
+      controls.start({
+        opacity: 1,
+      });
+    } else {
+      controls.set({
+        opacity: 0,
+      });
+    }
+  }, [startAnimation]);
 
   return (
-    <>
-      <Component
-        {...props}
-        animate={controls}
-        initial={{ opacity: 0 }}
-        transition={{ duration: 2, ease: 'easeInOut' }}
-      />
-      <button type="button" onClick={handleStartClick}>
-        Start Animation
-      </button>
-      <button type="button" onClick={handleResetClick}>
-        Reset Animation
-      </button>
-    </>
+    <Component
+      {...props}
+      animate={controls}
+      initial={{ opacity: 0 }}
+      transition={{ duration: 2, ease: 'easeInOut' }}
+    />
   );
 };
 

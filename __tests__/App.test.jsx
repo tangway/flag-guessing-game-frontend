@@ -1,6 +1,5 @@
 import React from 'react';
 import { render, fireEvent, screen } from '@testing-library/react';
-import { test, expect } from 'jest';
 import '@testing-library/jest-dom';
 import App from '../src/App';
 import questions from '../src/questions';

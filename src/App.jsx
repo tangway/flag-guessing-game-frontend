@@ -1,12 +1,11 @@
 // working version where a higher order component (HOC) is used so that all
 // individualized animation parameters can stay in the svg react components
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import questions from './questions';
 import mapOfFlags from './components/mapOfFlags';
-// import { useAnimation } from 'framer-motion';
 
-// import AnimatedComponent from './components/AnimatedComponent';
+import AnimatedComponent from './components/AnimatedComponent';
 // import StLuciaFlag from './components/st-lucia-svg';
 // import SriLankaFlag from './components/sri-lanka-svg';
 // import AngolaFlag from './components/angola-flag-svg';
@@ -24,34 +23,33 @@ import mapOfFlags from './components/mapOfFlags';
 const App = () => {
   const [correct, setCorrect] = useState(null);
   const [correctAnswer, setCorrectAnswer] = useState(questions[0].answer);
+  const [startAnimation, setStartAnimation] = useState(false);
 
-  // const [startAnimation, setStartAnimation] = useState(false);
-
-  const FlagComponent = mapOfFlags[questions[0].answer];
+  const FlagComponent = AnimatedComponent(mapOfFlags[questions[0].answer]);
 
   const checkAnswer = userSelection => {
     if (userSelection === correctAnswer) {
       setCorrect(true);
-      // setStartAnimation(true);
     } else {
       setCorrect(false);
     }
+
+    setStartAnimation(true);
   };
 
   const getStatus = () => {
     if (correct === true) return 'CORRECT';
-    if (correct === null) return 'MAKE SELECTION';
+    if (correct === null) return 'MAKE A SELECTION';
     if (correct === false) return 'WRONG';
-    return 'MAKE SELECTION';
+    return 'MAKE A SELECTION';
   };
 
   return (
     <>
       <div className="flag-area">
-        <FlagComponent />
+        <FlagComponent startAnimation={startAnimation} />
       </div>
-      STATUS:
-      {getStatus()}
+      STATUS: {getStatus()}
       <div className="choices">
         <ul>
           {questions[0].choices.map(c => (
