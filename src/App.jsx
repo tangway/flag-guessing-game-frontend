@@ -24,17 +24,21 @@ const App = () => {
   const [correct, setCorrect] = useState(null);
   const [correctAnswer, setCorrectAnswer] = useState(questions[0].answer);
   const [startAnimation, setStartAnimation] = useState(false);
+  const [selectionMade, setSelectionMade] = useState(false);
 
   const FlagComponent = AnimatedComponent(mapOfFlags[questions[0].answer]);
 
   const checkAnswer = userSelection => {
-    if (userSelection === correctAnswer) {
-      setCorrect(true);
-    } else {
-      setCorrect(false);
-    }
+    if (!selectionMade) {
+      if (userSelection === correctAnswer) {
+        setCorrect(true);
+      } else {
+        setCorrect(false);
+      }
 
-    setStartAnimation(true);
+      setSelectionMade(true);
+      setStartAnimation(true);
+    }
   };
 
   const getStatus = () => {
