@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useAnimation } from 'framer-motion';
-import { useEffect } from 'react';
 
 // // version with start and reset animation buttons
 // const AnimatedComponent = Component => props => {

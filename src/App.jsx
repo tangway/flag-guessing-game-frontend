@@ -22,16 +22,35 @@ import AnimatedComponent from './components/AnimatedComponent';
 
 const App = () => {
   const [correct, setCorrect] = useState(null);
-  const [correctAnswer, setCorrectAnswer] = useState(questions[0].answer);
   const [startAnimation, setStartAnimation] = useState(false);
   const [selectionMade, setSelectionMade] = useState(false);
+  const [currentQuestionNumber, setCurrentQuestionNumber] = useState(0);
+  const [correctAnswer, setCorrectAnswer] = useState(
+    questions[currentQuestionNumber].answer,
+  );
+  const [score, setScore] = useState(0);
 
-  const FlagComponent = AnimatedComponent(mapOfFlags[questions[0].answer]);
+  const FlagComponent = AnimatedComponent(
+    mapOfFlags[questions[currentQuestionNumber].answer],
+  );
+
+  const nextButtonFunc = () => {
+    if (currentQuestionNumber === questions.length - 1) {
+      console.log('THE END');
+    } else {
+      setCorrect(null);
+      setSelectionMade(false);
+      setStartAnimation(false);
+      setCurrentQuestionNumber(currentQuestionNumber + 1);
+      setCorrectAnswer(questions[currentQuestionNumber + 1].answer);
+    }
+  };
 
   const checkAnswer = userSelection => {
     if (!selectionMade) {
       if (userSelection === correctAnswer) {
         setCorrect(true);
+        setScore(score + 1);
       } else {
         setCorrect(false);
       }
@@ -56,7 +75,7 @@ const App = () => {
       STATUS: {getStatus()}
       <div className="choices">
         <ul>
-          {questions[0].choices.map(c => (
+          {questions[currentQuestionNumber].choices.map(c => (
             <button
               key={c}
               type="button"
@@ -69,9 +88,13 @@ const App = () => {
         </ul>
       </div>
       <div className="next">
-        <button type="button">Next</button>
+        <button type="button" onClick={nextButtonFunc}>
+          Next
+        </button>
       </div>
-      <div className="score">Score: 0/5</div>
+      <div className="score">
+        Score: {score}/{questions.length}
+      </div>
     </>
   );
 };
