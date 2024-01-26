@@ -1,2 +1,3 @@
 This is my first MERN stack application.
-This is also where I first try out Issue Driven Development as suggested here: https://simonwillison.net/2022/Nov/26/productivity/
+
+This is also where I first try out Issue Driven Development as suggested here: https://simonwillison.net/2022/Nov/26/productivity/ where he figured that the processes used in a large async team are also helpful in a personal capacity. Documenting in Github Issues can help someone to just read through to gain context on the problem quickly and be able to work on it from there. This someone can be a team member but it can also be your future self when you come back to the code after a few weeks.

@@ -1,7 +1,7 @@
 const questions = [
   {
     answer: 'Saint Lucia',
-    choices: ['Belize', 'Singapore', 'Dominica', 'Saint Lucia'],
+    choices: ['Belize', 'Botswana', 'Dominica', 'Saint Lucia'],
   },
   {
     answer: 'Sri Lanka',
@@ -9,7 +9,7 @@ const questions = [
   },
   {
     answer: 'Albania',
-    choices: ['Northern Macedonia', 'Suriname', 'Albania', 'Paraguay'],
+    choices: ['North Macedonia', 'Suriname', 'Albania', 'Paraguay'],
   },
   {
     answer: 'Angola',
