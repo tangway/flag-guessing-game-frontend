@@ -1,6 +1,9 @@
-/* box-sizing reset */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-html {
+/* box-sizing reset */
+/* html {
   box-sizing: border-box;
 }
 
@@ -10,39 +13,48 @@ html {
   box-sizing: inherit;
   margin: 0;
   padding: 0;
-}
+} */
 /*  */
 
 /* sets html and body elements to 100% of viewport */
-html,
+/* html,
 body {
   height: 100%;
-}
+} */
 
-body {
+/* body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start; /* is a default setting and is actually not needed */
-  padding-top: 20vh; /* sets padding to 20% of viewport height */
+  justify-content: flex-start;
+  padding-top: 20vh;
+} */
+
+@layer base {
+  html {
+    @apply box-border;
+  }
+
+  *,
+  *::before,
+  *::after {
+    @apply m-0 p-0 box-border;
+  }
+
+  body {
+    @apply h-full flex flex-col items-center justify-start pt-[20vh] bg-gradient-to-r from-[#fdfbfb] via-transparent to-[#9fb4ca] bg-no-repeat bg-cover;
+  }
 }
+
+/* rest of your CSS here */
+
 
 body {
-  /* sun and mountain bg image */
-  /* background-image: url('/pexels-photo-414171.jpeg'); */
-
-  /* background-color: #4158D0;
-  background-image: linear-gradient(43deg, #4158D0 0%, #ababab 54%, #FFCC70 100%); */
-
   background-image: linear-gradient(120deg, #fdfbfb 0%, #9fb4ca 100%);
-  /* background-image: linear-gradient(135deg, #fdfcfb 0%, #e3c2b4 100%); */
-
-  /* sets the background width to auto and height to 150% of vp so we see more of the white*/
   background-size: auto 150vh;
-
-  /* make sure the image doesn't repeat */
   background-repeat: no-repeat;
 }
+
 
 .flag-area {
   /* width: 350px;
@@ -101,11 +113,13 @@ body {
 }
 
 .choice-button:focus {
-  box-shadow: #D6D6E7 0 0 0 1.5px inset, rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
+  box-shadow: #d6d6e7 0 0 0 1.5px inset, rgba(45, 35, 66, 0.4) 0 2px 4px,
+    rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #d6d6e7 0 -3px 0 inset;
 }
 
 .choice-button:hover {
-  box-shadow: rgba(45, 35, 66, 0.4) 0 4px 8px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -6px 0 inset;
+  box-shadow: rgba(45, 35, 66, 0.4) 0 4px 8px,
+    rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #d6d6e7 0 -6px 0 inset;
   transform: translateY(-2px);
 }
 
