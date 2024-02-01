@@ -2,7 +2,7 @@
 // individualized animation parameters can stay in the svg react components
 
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, LayoutGroup } from 'framer-motion';
 import questions from './questions';
 import mapOfFlags from './components/mapOfFlags';
 import './App.css';
@@ -120,11 +120,11 @@ const App = () => {
   // };
 
   return (
-    <>
+    <LayoutGroup>
       <MotionDiv
         className="flag-area"
         key={currentQuestionNumber}
-        variants={initialLoadVariants}
+        variants={nextClicked ? '' : initialLoadVariants}
       >
         <FlagComponent startAnimation={startAnimation} />
       </MotionDiv>
@@ -134,7 +134,7 @@ const App = () => {
         <MotionDiv
           className="choices"
           key={currentQuestionNumber}
-          variants={initialLoadVariants}
+          variants={nextClicked ? '' : initialLoadVariants}
         >
           {questions[currentQuestionNumber].choices.map(choice => (
             <button
@@ -142,7 +142,6 @@ const App = () => {
               type="button"
               className="choice-button"
               onClick={() => checkAnswer(choice)}
-              style={{ width: '200px' }}
             >
               <span className="choice-text">{choice}</span>
             </button>
@@ -152,7 +151,7 @@ const App = () => {
           <MotionDiv
             className="next"
             key={currentQuestionNumber}
-            variants={initialLoadVariants}
+            variants={nextClicked ? '' : initialLoadVariants}
           >
             <button
               type="button"
@@ -168,7 +167,7 @@ const App = () => {
           Score: {score}/{questions.length}
         </MotionDiv>
       </div>
-    </>
+    </LayoutGroup>
   );
 };
 
