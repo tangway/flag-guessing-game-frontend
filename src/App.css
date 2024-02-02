@@ -106,17 +106,57 @@ body {
 } */
 
 .choice-button:focus {
-  box-shadow: #D6D6E7 0 0 0 1.5px inset, rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
+  box-shadow: #d6d6e7 0 0 0 1.5px inset, rgba(45, 35, 66, 0.4) 0 2px 4px,
+    rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #d6d6e7 0 -3px 0 inset;
 }
 
 .choice-button:hover {
-  box-shadow: rgba(45, 35, 66, 0.4) 0 4px 8px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -6px 0 inset;
+  box-shadow: rgba(45, 35, 66, 0.4) 0 4px 8px,
+    rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #d6d6e7 0 -6px 0 inset;
   transform: translateY(-2px);
 }
 
 .choice-button:active {
   box-shadow: #d6d6e7 0 3px 7px inset;
   transform: translateY(2px);
+}
+
+.choice-button {
+  white-space: nowrap;
+  overflow: hidden;
+  transition: width 3s ease-out, opacity 3s ease-out;
+}
+
+.choice-button.empty {
+  animation: shrinkAndGrow 3s ease-out forwards;
+}
+
+.choice-button.empty .choice-text {
+  animation: fadeText 3s ease-out forwards;
+}
+
+@keyframes shrinkAndGrow {
+  0% {
+    width: 200px;
+  }
+  50% {
+    width: 0;
+  }
+  100% {
+    width: 200px;
+  }
+}
+
+@keyframes fadeText {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 /* having this container in the html structure somehow prevents the bug where 
@@ -131,6 +171,8 @@ on accumulating on the page */
   color: #fcfcfd;
   box-shadow: #424463 0 2px 4px, #949adb 0 7px 13px -3px, #71718e 0 -6px 0 inset;
 }
+
+/* TODO write properties for next-button active state */
 
 .score {
   font-family: 'JetBrains Mono', monospace;

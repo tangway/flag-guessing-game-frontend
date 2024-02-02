@@ -1,8 +1,9 @@
 // working version where a higher order component (HOC) is used so that all
 // individualized animation parameters can stay in the svg react components
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, LayoutGroup } from 'framer-motion';
+import { MagicMotion } from 'react-magic-motion';
 import questions from './questions';
 import mapOfFlags from './components/mapOfFlags';
 import './App.css';
@@ -80,6 +81,7 @@ const App = () => {
   );
   const [score, setScore] = useState(0);
   const [nextClicked, setNextClicked] = useState(false);
+  const [buttonsEmpty, setButtonsEmpty] = useState(false);
 
   const FlagComponent = AnimatedComponent(
     mapOfFlags[questions[currentQuestionNumber].answer],
@@ -95,6 +97,7 @@ const App = () => {
       setCurrentQuestionNumber(currentQuestionNumber + 1);
       setCorrectAnswer(questions[currentQuestionNumber + 1].answer);
       setNextClicked(true);
+      setButtonsEmpty(true);
     }
   };
 
@@ -119,6 +122,10 @@ const App = () => {
   //   return 'MAKE A SELECTION';
   // };
 
+  // useEffect(() => {
+  //   setButtonsEmpty(false); // Reset buttonsEmpty when the question number changes
+  // }, [currentQuestionNumber]);
+
   return (
     <LayoutGroup>
       <MotionDiv
@@ -140,7 +147,7 @@ const App = () => {
             <button
               key={choice}
               type="button"
-              className="choice-button"
+              className={`choice-button ${buttonsEmpty ? 'empty' : ''}`}
               onClick={() => checkAnswer(choice)}
             >
               <span className="choice-text">{choice}</span>
