@@ -2,7 +2,7 @@
 // individualized animation parameters can stay in the svg react components
 
 import React, { useState, useEffect } from 'react';
-import { motion, LayoutGroup } from 'framer-motion';
+import { motion, LayoutGroup, AnimatePresence } from 'framer-motion';
 import { MagicMotion } from 'react-magic-motion';
 import questions from './questions';
 import mapOfFlags from './components/mapOfFlags';
@@ -32,15 +32,30 @@ import AnimatedComponent from './components/AnimatedComponent';
 //   },
 // };
 
+// const initialLoadVariants = {
+//   hidden: { scale: 3, opacity: 0 },
+//   visible: {
+//     scale: 1,
+//     opacity: 1,
+//     transition: {
+//       // scale: { type: "inertia", velocity: 500 },
+//       scale: { duration: 1.8, ease: 'easeInOut' },
+//       // scale: { type: 'spring', stiffness: 500, damping: 30 },
+//       opacity: { duration: 1.5, ease: 'easeInOut' },
+//     },
+//   },
+// };
+
 const initialLoadVariants = {
-  hidden: { scale: 3, opacity: 0 },
+  hidden: {
+    transform: 'scale(10)',
+    opacity: 0,
+  },
   visible: {
-    scale: 1,
+    transform: 'scale(1)',
     opacity: 1,
     transition: {
-      // scale: { type: "inertia", velocity: 500 },
-      scale: { duration: 1.8, ease: 'easeInOut' },
-      // scale: { type: 'spring', stiffness: 500, damping: 30 },
+      transform: { duration: 1.8, ease: 'easeInOut' },
       opacity: { duration: 1.5, ease: 'easeInOut' },
     },
   },
@@ -127,7 +142,7 @@ const App = () => {
   // }, [currentQuestionNumber]);
 
   return (
-    <LayoutGroup>
+    <>
       <MotionDiv
         className="flag-area"
         key={currentQuestionNumber}
@@ -138,22 +153,28 @@ const App = () => {
       <div className="user-interface">
         {/* <MotionDiv className="status">STATUS: {getStatus()}</MotionDiv> */}
         <br />
-        <MotionDiv
-          className="choices"
-          key={currentQuestionNumber}
-          variants={nextClicked ? '' : initialLoadVariants}
-        >
-          {questions[currentQuestionNumber].choices.map(choice => (
-            <button
-              key={choice}
-              type="button"
-              className={`choice-button ${buttonsEmpty ? 'empty' : ''}`}
-              onClick={() => checkAnswer(choice)}
-            >
-              <span className="choice-text">{choice}</span>
-            </button>
-          ))}
-        </MotionDiv>
+        <div className="choices">
+          <AnimatePresence mode="wait">
+            {questions[currentQuestionNumber].choices.map(choice => (
+              <motion.button
+                key={`${choice}-${currentQuestionNumber}`}
+                type="button"
+                className={`choice-button ${buttonsEmpty ? 'empty' : ''}`}
+                onClick={() => checkAnswer(choice)}
+                initial={{ transform: 'scale(0)', opacity: 0 }}
+                animate={{ transform: 'scale(1)', opacity: 1 }}
+                exit={{
+                  transform: 'scale(0)',
+                  transition: { duration: 1, ease: 'easeInOut' },
+                }}
+                transition={{ duration: 1, ease: 'easeInOut' }}
+                layout
+              >
+                <span className="choice-text">{choice}</span>
+              </motion.button>
+            ))}
+          </AnimatePresence>
+        </div>
         <div className="next-button-container">
           <MotionDiv
             className="next"
@@ -170,11 +191,15 @@ const App = () => {
           </MotionDiv>
         </div>
         <br />
-        <MotionDiv className="score">
+        <MotionDiv
+          className="score"
+          key={currentQuestionNumber}
+          variants={nextClicked ? '' : initialLoadVariants}
+        >
           Score: {score}/{questions.length}
         </MotionDiv>
       </div>
-    </LayoutGroup>
+    </>
   );
 };
 

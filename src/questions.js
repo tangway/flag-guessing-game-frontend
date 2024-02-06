@@ -1,11 +1,11 @@
 const questions = [
   {
-    answer: 'Saint Lucia',
-    choices: ['Belize', 'Botswana', 'Dominica', 'Saint Lucia'],
+    answer: 'St Lucia',
+    choices: ['Belize', 'Botswana', 'Dominica', 'St Lucia', 'Peru', 'Rwanda', 'Tunisia', 'Panama'],
   },
   {
     answer: 'Sri Lanka',
-    choices: ['Madagascar', 'Comoros', 'Guyana', 'Sri Lanka'],
+    choices: ['Madagascar', 'Comoros', 'Guyana', 'Sri Lanka', 'Serbia', 'Taiwan', 'Ireland', 'Georgia'],
   },
   {
     answer: 'Albania',

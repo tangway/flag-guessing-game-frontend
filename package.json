@@ -1,5 +1,6 @@
 {
   "name": "flag-guessing-github-repo",
+  "homepage": "https://tangway.github.io/flag-guessing-game-frontend/",
   "private": true,
   "version": "0.0.0",
   "type": "module",
