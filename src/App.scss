@@ -1,0 +1,147 @@
+/* box-sizing reset */
+html {
+  box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+  margin: 0;
+  padding: 0;
+}
+/*  */
+
+/* sets html and body elements to 100% of viewport so that child elements' flexbox and grid can have percentage based height */
+html,
+body {
+  height: 100%;
+}
+
+// reusable variables
+$button-bg: #fcfcfd;
+$button-text-color: #36395a;
+$inverted-bg: $button-text-color;
+$inverted-text-color: $button-bg;
+
+// mixin for shared button properties
+@mixin button-styles($bg-color, $text-color, $inset-color) {
+  align-items: center;
+  appearance: none;
+  background-color: $bg-color;
+  border-radius: 4px;
+  border-width: 0;
+  box-shadow:
+    rgba(45, 35, 66, 0.4) 0 2px 4px,
+    rgba(45, 35, 66, 0.3) 0 7px 13px -3px,
+    $inset-color 0 -6px 0 inset;
+  color: $text-color;
+  cursor: pointer;
+  display: inline-flex;
+  font-family: "JetBrains Mono", monospace;
+  height: 40px;
+  justify-content: center;
+  line-height: 1;
+  list-style: none;
+  overflow: hidden;
+  padding-left: 16px;
+  padding-right: 16px;
+  position: relative;
+  text-align: left;
+  text-decoration: none;
+  transition:
+    box-shadow 0.15s,
+    transform 0.15s;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+  will-change: box-shadow, transform;
+  font-size: 18px;
+
+  &:focus {
+    box-shadow:
+      $bg-color 0 0 0 1.5px inset,
+      rgba(45, 35, 66, 0.4) 0 2px 4px,
+      rgba(45, 35, 66, 0.3) 0 7px 13px -3px,
+      $inset-color 0 -3px 0 inset;
+  }
+
+  &:hover {
+    box-shadow:
+      rgba(45, 35, 66, 0.4) 0 4px 8px,
+      rgba(45, 35, 66, 0.3) 0 7px 13px -3px,
+      $inset-color 0 -6px 0 inset;
+    transform: translateY(-2px);
+  }
+
+  &:active {
+    box-shadow: $bg-color 0 3px 7px inset;
+    transform: translateY(2px);
+  }
+}
+
+body {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start; /* is a default setting and is actually not needed */
+  padding-top: 10vh; /* sets padding to 10% of viewport height */
+  background-image: linear-gradient(120deg, #fdfbfb 0%, #9fb4ca 100%);
+  background-size: auto 150vh; /* sets the background width to auto and height to 150% of vp so we see more of the white bg*/
+  background-repeat: no-repeat; /* makes sure the image doesn't repeat */
+  // background-image: url('/pexels-photo-414171.jpeg'); /* sun and mountain bg image */
+
+  // Adjust the size of the image to be twice the height of the screen, 
+  // ensuring only the top half is shown 
+  @media (max-width: 400px) {
+    background-size: auto 150vh;
+    background-position: top 0% right 45%;
+    padding-top: 10vh;
+  }
+}
+
+.flag-area {
+  width: 350px;
+  height: 250px;
+  margin-bottom: 10px;
+}
+
+// all the styles nested within 
+.user-interface {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  .choices {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    gap: 10px;
+    width: 350px;
+
+    .choice-button {
+      @include button-styles($button-bg, $button-text-color, #d6d6e7);
+    }
+  }
+
+  // having this container in the html structure somehow prevents the bug where 
+  // the choices never get removed from the page when you click Next and they keep 
+  // on accumulating on the page 
+  .next-button-container {
+    margin-top: 30px;
+
+    .next-button {
+      @include button-styles($inverted-bg, $inverted-text-color, #71718e);
+    }
+
+    // TODO write properties for next-button active state
+  }
+
+  .score {
+    font-family: "JetBrains Mono", monospace;
+  }
+}

@@ -6,7 +6,7 @@ import { motion, LayoutGroup, AnimatePresence } from 'framer-motion';
 import { MagicMotion } from 'react-magic-motion';
 import questions from './questions';
 import mapOfFlags from './components/mapOfFlags';
-import './App.css';
+import './App.scss';
 
 import AnimatedComponent from './components/AnimatedComponent';
 // import StLuciaFlag from './components/st-lucia-svg';
