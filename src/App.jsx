@@ -6,6 +6,7 @@ import { motion, LayoutGroup, AnimatePresence } from 'framer-motion';
 import { MagicMotion } from 'react-magic-motion';
 import questions from './questions';
 import mapOfFlags from './components/mapOfFlags';
+import Modal from './components/Modal/Modal';
 import './App.scss';
 
 import AnimatedComponent from './components/AnimatedComponent';
@@ -199,6 +200,7 @@ const App = () => {
           Score: {score}/{questions.length}
         </MotionDiv>
       </div>
+      {(correct === false) && <Modal hints={questions[currentQuestionNumber].timezone} />}
     </>
   );
 };
