@@ -1,21 +1,38 @@
 .modal-container {
+  // // flex properties which didnt make the child element flex items
   // display: flex;
   // place-items: center;
-  // position: fixed;
-  // top:  0;
-  // left:  0;
-  // right:  0;
-  // bottom:  0;
 
   .modal {
-    position: fixed;
+    // // used to position an element relative to the browser window. This means that the element will stay in the same place even if the page is scrolled. It is often used for elements that need to be visible at all times, such as modals, headers, or footers.
+    // position: fixed;
+    // top and left properties move position of elements based on the point in its top-left corner
+    // wch is why transform is needed to center the modal.
+    // transform is adjusting relative to its own size and not the viewport
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    border-radius: 8px;
+    padding: 1.5rem 1rem 1rem 1rem;
+    border: 8px solid rgb(148, 148, 148, 0.33);
+    border-radius: 29px;
+    // background-color: rgb(160, 160, 160);
+    // background-image: linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%);
+    background-color: rgb(59 59 59 / 63%);
+    // background: radial-gradient(circle, rgba(150,149,159,1) 0%, rgba(249,249,249,1) 100%);
+    color: rgb(255, 255, 255);
+    text-align: center;
+    font-family: "JetBrains Mono", monospace;
 
     &::backdrop {
-      backdrop-filter: blur(3.7px);
+      backdrop-filter: blur(9px);
+    }
+
+    .close-button {
+      background-color: rgb(87, 87, 87, 0.33);
+      color: white;
+      font-family: "JetBrains Mono", monospace;
+      border-radius: 5px;
+      padding: 5px;
     }
   }
 }

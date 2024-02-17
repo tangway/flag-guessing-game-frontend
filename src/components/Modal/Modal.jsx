@@ -17,7 +17,8 @@ const Modal = ({ hints }) => {
       <dialog ref={dialogRef} className="modal">
         <h5>Time Zone:</h5>
         <h2>{hints}</h2>
-        <button onClick={closeModal} type="button">
+        <br />
+        <button className="close-button" onClick={closeModal} type="button">
           close
         </button>
       </dialog>
