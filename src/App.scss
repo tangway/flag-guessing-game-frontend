@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
+
 /* box-sizing reset */
 html {
   box-sizing: border-box;
@@ -93,8 +95,8 @@ body {
   background-repeat: no-repeat; /* makes sure the image doesn't repeat */
   // background-image: url('/pexels-photo-414171.jpeg'); /* sun and mountain bg image */
 
-  // Adjust the size of the image to be twice the height of the screen, 
-  // ensuring only the top half is shown 
+  // Adjust the size of the image to be twice the height of the screen,
+  // ensuring only the top half is shown
   @media (max-width: 400px) {
     background-size: auto 150vh;
     background-position: top 0% right 45%;
@@ -108,7 +110,7 @@ body {
   margin-bottom: 10px;
 }
 
-// all the styles nested within 
+// all the styles nested within
 .user-interface {
   display: flex;
   flex-direction: column;
@@ -126,11 +128,54 @@ body {
     .choice-button {
       @include button-styles($button-bg, $button-text-color, #d6d6e7);
     }
+
+    .clicked {
+      // background-color: rgb(47, 62, 98);
+      background-color: rgb(255 29 29);
+    }
+
+    @keyframes dance {
+      0%,
+      100% {
+        transform: rotate(0deg);
+      }
+      25% {
+        transform: rotate(-20deg);
+      }
+      50% {
+        transform: rotate(0deg);
+      }
+      75% {
+        transform: rotate(20deg);
+      }
+    }
+
+    @keyframes flash {
+      0%,
+      100% {
+        background-color: #fcfcfd; /* Replace with the base color of your button */
+      }
+      50% {
+        background-color: rgb(14, 233, 137); /* Replace with the color you want to flash to */
+      }
+    }
+
+    .correct-answer {
+      background-color: rgb(14, 233, 137);
+      animation:
+        flash 0.2s 25,
+        dance 1s 5;
+      // animation: dance  1s infinite;
+      animation-timing-function: ease-in-out;
+      // animation-timing-function: linear;
+      // animation-timing-function: cubic-bezier(.19,.87,.61,.93);
+      z-index: 101;
+    }
   }
 
-  // having this container in the html structure somehow prevents the bug where 
-  // the choices never get removed from the page when you click Next and they keep 
-  // on accumulating on the page 
+  // having this container in the html structure somehow prevents the bug where
+  // the choices never get removed from the page when you click Next and they keep
+  // on accumulating on the page
   .next-button-container {
     margin-top: 30px;
 
@@ -141,7 +186,24 @@ body {
     // TODO write properties for next-button active state
   }
 
-  .score {
+  @keyframes status-flash {
+    0%,
+    100% {
+      opacity: 1; /* Fully visible at the start and end of the animation */
+    }
+    50% {
+      opacity: 0; /* Fully transparent in the middle of the animation */
+      // background-color: rgb(255, 0, 0);
+    }
+  }
+
+  .score,
+  .status-bar,
+  .status-bar-correct {
     font-family: "JetBrains Mono", monospace;
+  }
+
+  .status-bar-correct {
+    animation: status-flash 0.2s ease-in-out 15;
   }
 }

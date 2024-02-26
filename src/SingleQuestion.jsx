@@ -62,6 +62,23 @@ const initialLoadVariants = {
   },
 };
 
+const jackInTheBoxVariants = {
+  hidden: {
+    opacity: 0,
+    scale: 0.01,
+    rotate: 60,
+  },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    rotate: 0,
+    transition: {
+      duration: 1.8,
+      ease: 'easeInOut',
+    },
+  },
+};
+
 // for animation when user clicks Next button but it is currently not working
 // can be enabled with conditional rendering of variants
 // const nextClickedVariants = {
@@ -98,6 +115,9 @@ const SingleQuestion = () => {
   const [score, setScore] = useState(0);
   const [nextClicked, setNextClicked] = useState(false);
   const [buttonsEmpty, setButtonsEmpty] = useState(false);
+  const [numberOfAttempts, setNumberOfAttempts] = useState(0);
+  const [buttonClicked, setButtonClicked] = useState([]);
+  const [correctButton, setCorrectButton] = useState(null);
 
   const FlagComponent = AnimatedComponent(
     mapOfFlags[questions[currentQuestionNumber].answer],
@@ -117,24 +137,21 @@ const SingleQuestion = () => {
     }
   };
 
-  const checkAnswer = userSelection => {
-    if (userSelection === correctAnswer) {
+  const checkAnswer = event => {
+    const target = event.currentTarget;
+    target.disabled = true;
+    setButtonClicked(buttonClicked.concat(target.id));
+    setNumberOfAttempts(numberOfAttempts + 1);
+
+    if (target.textContent === correctAnswer) {
       setCorrect(true);
+      setCorrectButton(target.id);
       setScore(score + 1);
       setStartAnimation(true);
     } else {
       setCorrect(false);
     }
-
-    // setSelectionMade(true);
   };
-
-  // const getStatus = () => {
-  //   if (correct === true) return 'CORRECT';
-  //   if (correct === null) return 'MAKE A SELECTION';
-  //   if (correct === false) return 'WRONG';
-  //   return 'MAKE A SELECTION';
-  // };
 
   // useEffect(() => {
   //   setButtonsEmpty(false); // Reset buttonsEmpty when the question number changes
@@ -145,12 +162,30 @@ const SingleQuestion = () => {
       <MotionDiv
         className="flag-area"
         key={currentQuestionNumber}
-        variants={nextClicked ? '' : initialLoadVariants}
+        variants={nextClicked ? '' : jackInTheBoxVariants}
       >
         <FlagComponent startAnimation={startAnimation} />
       </MotionDiv>
       <div className="user-interface">
-        {/* <MotionDiv className="status">STATUS: {getStatus()}</MotionDiv> */}
+        <MotionDiv
+          key={currentQuestionNumber}
+          variants={nextClicked ? '' : jackInTheBoxVariants}
+        >
+          {correct === true ? (
+            <h2 className="status-bar-correct">CORRRECT!!</h2>
+          ) : (
+            <h2 className="status-bar">
+              You have {4 - numberOfAttempts} attempts left
+            </h2>
+          )}
+        </MotionDiv>
+        {/* <MotionDiv
+          className="score"
+          key={currentQuestionNumber}
+          variants={nextClicked ? '' : jackInTheBoxVariants}
+        >
+          Score: {score}/{questions.length}
+        </MotionDiv> */}
         <br />
         <div className="choices">
           <AnimatePresence mode="wait">
@@ -158,15 +193,21 @@ const SingleQuestion = () => {
               <motion.button
                 key={`${choice}-${currentQuestionNumber}`}
                 type="button"
-                className={`choice-button ${buttonsEmpty ? 'empty' : ''}`}
-                onClick={() => checkAnswer(choice)}
+                className={`choice-button ${buttonsEmpty ? 'empty' : ''} ${
+                  buttonClicked.includes(choice) ? 'clicked' : ''
+                } ${correctButton === choice ? 'correct-answer' : ''}`}
+                id={`${choice}`}
+                // onClick={() => checkAnswer(choice)}
+                onClick={checkAnswer}
+                // this disables all buttons when answer is correct or no more attempts left
+                disabled={(numberOfAttempts === 4 || correct) ? true : false}
                 initial={{ transform: 'scale(0)', opacity: 0 }}
                 animate={{ transform: 'scale(1)', opacity: 1 }}
                 exit={{
                   transform: 'scale(0)',
-                  transition: { duration: 1, ease: 'easeInOut' },
+                  transition: { duration: 1.3, ease: 'easeInOut' },
                 }}
-                transition={{ duration: 1, ease: 'easeInOut' }}
+                transition={{ duration: 1.3, ease: 'easeInOut' }}
                 layout
               >
                 <span className="choice-text">{choice}</span>
@@ -178,27 +219,28 @@ const SingleQuestion = () => {
           <MotionDiv
             className="next"
             key={currentQuestionNumber}
-            variants={nextClicked ? '' : initialLoadVariants}
+            variants={nextClicked ? '' : jackInTheBoxVariants}
           >
             <button
               type="button"
               className="next-button"
               onClick={nextButtonFunc}
             >
-              Next
+              Did you know?
             </button>
           </MotionDiv>
         </div>
         <br />
-        <MotionDiv
-          className="score"
-          key={currentQuestionNumber}
-          variants={nextClicked ? '' : initialLoadVariants}
-        >
-          Score: {score}/{questions.length}
-        </MotionDiv>
       </div>
-      {(correct === false) && <Modal hints={questions[currentQuestionNumber].timezone} />}
+      {numberOfAttempts > 0 && correct === false && (
+        <Modal
+          key={numberOfAttempts}
+          attempt={numberOfAttempts}
+          hint1={questions[currentQuestionNumber].timezone}
+          hint2={questions[currentQuestionNumber].population}
+          hint3={questions[currentQuestionNumber].demographic}
+        />
+      )}
     </>
   );
 };

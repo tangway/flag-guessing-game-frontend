@@ -13,18 +13,24 @@
     left: 50%;
     transform: translate(-50%, -50%);
     padding: 1.5rem 1rem 1rem 1rem;
-    border: 8px solid rgb(148, 148, 148, 0.33);
-    border-radius: 29px;
+    border: 20px solid rgb(35 20 20 / 33%);
+    border-radius: 62px;
     // background-color: rgb(160, 160, 160);
     // background-image: linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%);
-    background-color: rgb(59 59 59 / 75%);
+    background-color: rgb(59 59 59 / 80%);
     // background: radial-gradient(circle, rgba(150,149,159,1) 0%, rgba(249,249,249,1) 100%);
     color: rgb(255, 255, 255);
     text-align: center;
     font-family: "JetBrains Mono", monospace;
+    width: max-content;
 
     &::backdrop {
-      backdrop-filter: blur(9px);
+      backdrop-filter: blur(8px);
+    }
+
+    .demographic-text {
+      font-size: 1.5rem;
+      font-weight: bold;
     }
 
     .close-button {

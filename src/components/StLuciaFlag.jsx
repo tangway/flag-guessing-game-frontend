@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 
 const StLuciaFlag = ({ animate, initial, transition, ...props }) => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" {...props}>
-    <title>Flag of Saint Lucia</title>
+    {/* <title>Flag of Saint Lucia</title> */}
     <motion.path
       id="cyan-bg"
       fill="#6cF"
