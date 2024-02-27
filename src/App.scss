@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
 
 /* box-sizing reset */
 html {
@@ -181,6 +182,7 @@ body {
 
     .next-button {
       @include button-styles($inverted-bg, $inverted-text-color, #71718e);
+      background-color: rgb(221 105 45);
     }
 
     // TODO write properties for next-button active state
@@ -197,10 +199,16 @@ body {
     }
   }
 
-  .score,
+  .score {
+    font-family: "JetBrains Mono", monospace;
+  }
+
   .status-bar,
   .status-bar-correct {
-    font-family: "JetBrains Mono", monospace;
+    font-family: "VT323";
+    font-size: 2rem;
+    font-weight: normal;
+    text-transform: uppercase;
   }
 
   .status-bar-correct {

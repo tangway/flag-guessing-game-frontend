@@ -2,7 +2,12 @@
 // individualized animation parameters can stay in the svg react components
 
 import React, { useState, useEffect } from 'react';
-import { motion, LayoutGroup, AnimatePresence } from 'framer-motion';
+import {
+  motion,
+  LayoutGroup,
+  AnimatePresence,
+  useAnimation,
+} from 'framer-motion';
 import { MagicMotion } from 'react-magic-motion';
 import questions from './questions';
 import mapOfFlags from './components/mapOfFlags';
@@ -47,33 +52,35 @@ import AnimatedComponent from './components/AnimatedComponent';
 //   },
 // };
 
+// // animate in from large, like dropping down
+// const initialLoadVariants = {
+//   hidden: {
+//     transform: 'scale(10)',
+//     opacity: 0,
+//   },
+//   visible: {
+//     transform: 'scale(1)',
+//     opacity: 1,
+//     transition: {
+//       transform: { duration: 1.8, ease: 'easeInOut' },
+//       opacity: { duration: 1.5, ease: 'easeInOut' },
+//     },
+//   },
+// };
+
+// scale in animation
 const initialLoadVariants = {
   hidden: {
-    transform: 'scale(10)',
     opacity: 0,
-  },
-  visible: {
-    transform: 'scale(1)',
-    opacity: 1,
-    transition: {
-      transform: { duration: 1.8, ease: 'easeInOut' },
-      opacity: { duration: 1.5, ease: 'easeInOut' },
-    },
-  },
-};
-
-const jackInTheBoxVariants = {
-  hidden: {
-    opacity: 0,
-    scale: 0.01,
-    rotate: 60,
+    scale: 0,
+    // rotate: 60,
   },
   visible: {
     opacity: 1,
     scale: 1,
-    rotate: 0,
+    // rotate: 0,
     transition: {
-      duration: 1.8,
+      duration: 2.5,
       ease: 'easeInOut',
     },
   },
@@ -90,6 +97,15 @@ const jackInTheBoxVariants = {
 //       width: { duration: 1, ease: 'easeInOut' },
 //       opacity: { duration: 1, ease: 'easeInOut' },
 //     },
+//   },
+// };
+
+// const buttonPopUpVariant = {
+//   hidden: {
+//     opacity: 0,
+//   },
+//   visible: {
+//     opacity: 1,
 //   },
 // };
 
@@ -157,32 +173,67 @@ const SingleQuestion = () => {
   //   setButtonsEmpty(false); // Reset buttonsEmpty when the question number changes
   // }, [currentQuestionNumber]);
 
+  const controls = useAnimation();
+
+  // // simple version
+  // useEffect(() => {
+  //   if (numberOfAttempts === 4 || correct === true) {
+  //     controls.start({
+  //       // opacity: 1,
+  //       scale: 1,
+  //       transition: { duration: 1, ease: 'easeInOut', delay: 2.5 },
+  //     });
+  //   }
+  // }, [numberOfAttempts, correct, controls]);
+
+  useEffect(() => {
+    if (numberOfAttempts === 4 || correct === true) {
+      controls.start({
+        scale: 1,
+        // x: [0, 0],
+        // y: [0, 0],
+        transition: { duration: 2.5, ease: 'easeInOut', delay: 3.5 },
+      });
+
+      setTimeout(() => {
+        controls.start({
+          // scale: [1, 0.9, 1.1, 1], // Shake scale values
+          scale: [1.2, 0.8, 1.2],
+          transition: {
+            duration: 2.5,
+            repeat: 'Infinity',
+            repeatType: 'reverse',
+            ease: 'easeInOut',
+          },
+        });
+      }, 2500); //  delay to match first part of animation's duration
+    }
+  }, [numberOfAttempts, correct]);
+
   return (
     <>
       <MotionDiv
         className="flag-area"
         key={currentQuestionNumber}
-        variants={nextClicked ? '' : jackInTheBoxVariants}
+        variants={nextClicked ? '' : initialLoadVariants}
       >
         <FlagComponent startAnimation={startAnimation} />
       </MotionDiv>
       <div className="user-interface">
         <MotionDiv
           key={currentQuestionNumber}
-          variants={nextClicked ? '' : jackInTheBoxVariants}
+          variants={nextClicked ? '' : initialLoadVariants}
         >
           {correct === true ? (
             <h2 className="status-bar-correct">CORRRECT!!</h2>
           ) : (
-            <h2 className="status-bar">
-              You have {4 - numberOfAttempts} attempts left
-            </h2>
+            <h2 className="status-bar">{4 - numberOfAttempts} attempts left</h2>
           )}
         </MotionDiv>
         {/* <MotionDiv
           className="score"
           key={currentQuestionNumber}
-          variants={nextClicked ? '' : jackInTheBoxVariants}
+          variants={nextClicked ? '' : initialLoadVariants}
         >
           Score: {score}/{questions.length}
         </MotionDiv> */}
@@ -200,14 +251,14 @@ const SingleQuestion = () => {
                 // onClick={() => checkAnswer(choice)}
                 onClick={checkAnswer}
                 // this disables all buttons when answer is correct or no more attempts left
-                disabled={(numberOfAttempts === 4 || correct) ? true : false}
+                disabled={numberOfAttempts === 4 || correct ? true : false}
                 initial={{ transform: 'scale(0)', opacity: 0 }}
                 animate={{ transform: 'scale(1)', opacity: 1 }}
+                transition={{ duration: 2.5, ease: 'easeInOut' }}
                 exit={{
                   transform: 'scale(0)',
                   transition: { duration: 1.3, ease: 'easeInOut' },
                 }}
-                transition={{ duration: 1.3, ease: 'easeInOut' }}
                 layout
               >
                 <span className="choice-text">{choice}</span>
@@ -216,10 +267,10 @@ const SingleQuestion = () => {
           </AnimatePresence>
         </div>
         <div className="next-button-container">
-          <MotionDiv
+          {/* <MotionDiv
             className="next"
             key={currentQuestionNumber}
-            variants={nextClicked ? '' : jackInTheBoxVariants}
+            variants={nextClicked ? '' : initialLoadVariants}
           >
             <button
               type="button"
@@ -228,7 +279,27 @@ const SingleQuestion = () => {
             >
               Did you know?
             </button>
-          </MotionDiv>
+          </MotionDiv> */}
+          {/* <motion.button
+            type="button"
+            className="next-button"
+            onClick={nextButtonFunc}
+            initial={{ scale: 0 }}
+            animate={controls}
+          >
+            Next
+          </motion.button> */}
+          <motion.p
+            // className="next-button"
+            onClick={nextButtonFunc}
+            initial={{ scale: 0 }}
+            animate={controls}
+            style={{
+              fontSize: '3rem',
+            }}
+          >
+            🎈
+          </motion.p>
         </div>
         <br />
       </div>
