@@ -134,10 +134,15 @@ const SingleQuestion = () => {
   const [numberOfAttempts, setNumberOfAttempts] = useState(0);
   const [buttonClicked, setButtonClicked] = useState([]);
   const [correctButton, setCorrectButton] = useState(null);
+  const [gameHasEnded, setGameHasEnded] = useState(false);
+  const [showEndModal, setShowEndModal] = useState(false);
 
   const FlagComponent = AnimatedComponent(
     mapOfFlags[questions[currentQuestionNumber].answer],
   );
+
+  const shouldShowModal =
+    numberOfAttempts > 0 && numberOfAttempts < 4 && correct === false;
 
   const nextButtonFunc = () => {
     if (currentQuestionNumber === questions.length - 1) {
@@ -155,18 +160,26 @@ const SingleQuestion = () => {
 
   const checkAnswer = event => {
     const target = event.currentTarget;
-    target.disabled = true;
-    setButtonClicked(buttonClicked.concat(target.id));
-    setNumberOfAttempts(numberOfAttempts + 1);
+
+    if (!gameHasEnded) {
+      target.disabled = true;
+      setButtonClicked(buttonClicked.concat(target.id));
+      setNumberOfAttempts(numberOfAttempts + 1);
+    }
 
     if (target.textContent === correctAnswer) {
       setCorrect(true);
+      setGameHasEnded(true);
       setCorrectButton(target.id);
       setScore(score + 1);
       setStartAnimation(true);
     } else {
       setCorrect(false);
     }
+  };
+
+  const showEndModalFunc = () => {
+    setShowEndModal(true);
   };
 
   // useEffect(() => {
@@ -188,6 +201,8 @@ const SingleQuestion = () => {
 
   useEffect(() => {
     if (numberOfAttempts === 4 || correct === true) {
+      setGameHasEnded(true);
+
       controls.start({
         scale: 1,
         // x: [0, 0],
@@ -291,27 +306,41 @@ const SingleQuestion = () => {
           </motion.button> */}
           <motion.p
             // className="next-button"
-            onClick={nextButtonFunc}
+            // onClick={nextButtonFunc}
+            onClick={showEndModalFunc}
             initial={{ scale: 0 }}
             animate={controls}
             style={{
               fontSize: '3rem',
             }}
           >
-            🎈
+            🎁
           </motion.p>
         </div>
         <br />
       </div>
-      {numberOfAttempts > 0 && correct === false && (
+      {shouldShowModal &&
+        (console.log(`correct state at shouldShowModal: ${correct}`),
+        (
+          <Modal
+            key={numberOfAttempts}
+            attempt={numberOfAttempts}
+            gameHasEnded={gameHasEnded}
+            hints={questions[currentQuestionNumber]}
+          />
+        ))}
+      {showEndModal && (
         <Modal
-          key={numberOfAttempts}
-          attempt={numberOfAttempts}
-          hint1={questions[currentQuestionNumber].timezone}
-          hint2={questions[currentQuestionNumber].population}
-          hint3={questions[currentQuestionNumber].demographic}
+          gameHasEnded={gameHasEnded}
+          hints={questions[currentQuestionNumber]}
         />
       )}
+      {/* <Modal
+        showEndModal={showEndModal}
+        setShowEndModal={setShowEndModal}
+        gameHasEnded={gameHasEnded}
+        hints={questions[currentQuestionNumber]}
+      /> */}
     </>
   );
 };
