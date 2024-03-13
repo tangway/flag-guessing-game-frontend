@@ -26,13 +26,13 @@ const questions = [
       'The island boasts the highest ratio of Nobel laureates produced with respect to the total population of any sovereign country in the world. Two winners have come from Saint Lucia: Sir Arthur Lewis, who won the Nobel Prize in Economics in 1979, and the poet Derek Walcott, who received the Nobel Prize in Literature in 1992.',
     links: [
       {
-        title: 'UTC-4:00 Time Zone Map',
-        url: 'https://upload.wikimedia.org/wikipedia/commons/a/ac/UTC-0400_-_2021.svg',
-      },
-      {
-        title: 'UTC-4 on the interactive world map',
+        title: 'UTC-4:00 on the interactive world map',
         url: 'https://dayspedia.com/time-zone-map/-14400/',
       },
+      // {
+      //   title: 'UTC-4:00 Time Zone Map',
+      //   url: 'https://upload.wikimedia.org/wikipedia/commons/a/ac/UTC-0400_-_2021.svg',
+      // },
     ],
   },
   {

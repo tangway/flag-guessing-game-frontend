@@ -5,8 +5,8 @@ const Modal = ({
   attempt,
   gameHasEnded,
   hints,
-  showEndModal,
-  setShowEndModal,
+  showEndModal = false,
+  setShowEndModal = () => {},
 }) => {
   const hint1 = hints.timezone;
   const hint2 = hints.population;
@@ -24,6 +24,7 @@ const Modal = ({
     if (dialogRef.current) dialogRef.current.showModal();
   }, []);
 
+  // // triggers modal open/close state by clicking on the icon
   // useEffect(() => {
   //   if (dialogRef.current && showEndModal) dialogRef.current.showModal();
   //   else if (!showEndModal) dialogRef.current.close();
@@ -34,16 +35,16 @@ const Modal = ({
       <dialog
         ref={dialogRef}
         className="modal"
-        // onClose={() => setShowEndModal(!showEndModal)}
+        onClose={() => setShowEndModal(!showEndModal)}
       >
         {gameHasEnded ? (
           <>
-            <h5>Fun Fact: </h5>
+            <h5>Bit of Trivia: </h5>
             <h4>{funfact}</h4>
             <br />
-            <h5>Links: </h5>
-            {links.map(l => (
-              <ul>
+            <h5>Links to Explore: </h5>
+            {links.map((l, i) => (
+              <ul key={i}>
                 <a href={l.url} target="_blank" rel="noopener noreferrer">
                   {l.title}
                 </a>

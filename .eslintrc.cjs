@@ -3,7 +3,8 @@ module.exports = {
     browser: true,
     es2021: true,
   },
-  extends: 'airbnb',
+  extends: ['airbnb', 'plugin:react-hooks/recommended'],
+  plugins: ['react-hooks'],
   overrides: [
     {
       env: {

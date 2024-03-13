@@ -1,7 +1,8 @@
 // working version where a higher order component (HOC) is used so that all
 // individualized animation parameters can stay in the svg react components
 
-import React, { useState, useEffect } from 'react';
+import React, {
+  useState, useEffect, useRef, useMemo } from 'react';
 import {
   motion,
   LayoutGroup,
@@ -137,8 +138,18 @@ const SingleQuestion = () => {
   const [gameHasEnded, setGameHasEnded] = useState(false);
   const [showEndModal, setShowEndModal] = useState(false);
 
-  const FlagComponent = AnimatedComponent(
-    mapOfFlags[questions[currentQuestionNumber].answer],
+  // const FlagComponent = AnimatedComponent(
+  //   mapOfFlags[questions[currentQuestionNumber].answer],
+  // );
+
+  // const FlagComponent = React.memo(
+  //   AnimatedComponent(mapOfFlags[questions[currentQuestionNumber].answer]),
+  // );
+
+  const FlagComponent = useMemo(
+    () =>
+      AnimatedComponent(mapOfFlags[questions[currentQuestionNumber].answer]),
+    [currentQuestionNumber],
   );
 
   const shouldShowModal =
@@ -168,6 +179,7 @@ const SingleQuestion = () => {
     }
 
     if (target.textContent === correctAnswer) {
+      // console.log(`in checkAnswer correct answer condition`)
       setCorrect(true);
       setGameHasEnded(true);
       setCorrectButton(target.id);
@@ -203,17 +215,21 @@ const SingleQuestion = () => {
     if (numberOfAttempts === 4 || correct === true) {
       setGameHasEnded(true);
 
+      // first part of animation
+      // the timeout value has to be longer than the duration+delay in the first
+      // part of animation otherwise the second part will override the first part
       controls.start({
         scale: 1,
         // x: [0, 0],
         // y: [0, 0],
-        transition: { duration: 2.5, ease: 'easeInOut', delay: 3.5 },
+        transition: { duration: 2.5, ease: 'easeInOut', delay: 5 },
       });
 
+      // second part of animation
       setTimeout(() => {
         controls.start({
           // scale: [1, 0.9, 1.1, 1], // Shake scale values
-          scale: [1.2, 0.8, 1.2],
+          scale: [1, 0.8, 1],
           transition: {
             duration: 2.5,
             repeat: 'Infinity',
@@ -221,7 +237,7 @@ const SingleQuestion = () => {
             ease: 'easeInOut',
           },
         });
-      }, 2500); //  delay to match first part of animation's duration
+      }, 7600);
     }
   }, [numberOfAttempts, correct]);
 
@@ -295,15 +311,6 @@ const SingleQuestion = () => {
               Did you know?
             </button>
           </MotionDiv> */}
-          {/* <motion.button
-            type="button"
-            className="next-button"
-            onClick={nextButtonFunc}
-            initial={{ scale: 0 }}
-            animate={controls}
-          >
-            Next
-          </motion.button> */}
           <motion.p
             // className="next-button"
             // onClick={nextButtonFunc}
@@ -316,6 +323,15 @@ const SingleQuestion = () => {
           >
             🎁
           </motion.p>
+          {/* <motion.button
+            type="button"
+            className="next-button"
+            onClick={nextButtonFunc}
+            initial={{ scale: 0 }}
+            animate={controls}
+          >
+            Next
+          </motion.button> */}
         </div>
         <br />
       </div>
@@ -329,18 +345,20 @@ const SingleQuestion = () => {
             hints={questions[currentQuestionNumber]}
           />
         ))}
-      {showEndModal && (
+      {/* {showEndModal && (
         <Modal
           gameHasEnded={gameHasEnded}
           hints={questions[currentQuestionNumber]}
         />
-      )}
-      {/* <Modal
+      )} */}
+      {showEndModal && (
+      <Modal
         showEndModal={showEndModal}
         setShowEndModal={setShowEndModal}
         gameHasEnded={gameHasEnded}
         hints={questions[currentQuestionNumber]}
-      /> */}
+      />
+      )}
     </>
   );
 };

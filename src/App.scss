@@ -205,13 +205,13 @@ body {
 
   .status-bar,
   .status-bar-correct {
-    font-family: "VT323";
-    font-size: 2rem;
-    font-weight: normal;
+    font-family: "JetBrains Mono", "VT323";
+    font-size: 1.5rem;
+    font-weight: bold;
     text-transform: uppercase;
   }
 
   .status-bar-correct {
-    animation: status-flash 0.2s ease-in-out 15;
+    animation: status-flash 0.2s ease-in-out 26;
   }
 }
