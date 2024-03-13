@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { useEffect, useRef } from 'react';
 import './Modal.scss';
 
@@ -97,6 +98,27 @@ const Modal = ({
       </dialog>
     </div>
   );
+};
+
+const hintsShape = PropTypes.shape({
+  demographic: PropTypes.arrayOf(PropTypes.string),
+  funfact: PropTypes.string,
+  links: PropTypes.arrayOf(
+    PropTypes.shape({
+      title: PropTypes.string,
+      url: PropTypes.string,
+    }),
+  ),
+  population: PropTypes.string,
+  timezone: PropTypes.string,
+});
+
+Modal.propTypes = {
+  attempt: PropTypes.number,
+  gameHasEnded: PropTypes.bool.isRequired,
+  hints: hintsShape.isRequired,
+  setShowEndModal: PropTypes.func,
+  showEndModal: PropTypes.bool,
 };
 
 export default Modal;

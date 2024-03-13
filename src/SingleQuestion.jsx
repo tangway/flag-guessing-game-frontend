@@ -1,15 +1,9 @@
 // working version where a higher order component (HOC) is used so that all
 // individualized animation parameters can stay in the svg react components
 
-import React, {
-  useState, useEffect, useRef, useMemo } from 'react';
-import {
-  motion,
-  LayoutGroup,
-  AnimatePresence,
-  useAnimation,
-} from 'framer-motion';
-import { MagicMotion } from 'react-magic-motion';
+import React, { useState, useEffect, useMemo } from 'react';
+import { motion, AnimatePresence, useAnimation } from 'framer-motion';
+// import { MagicMotion } from 'react-magic-motion';
 import questions from './questions';
 import mapOfFlags from './components/mapOfFlags';
 import Modal from './components/Modal/Modal';
@@ -336,7 +330,7 @@ const SingleQuestion = () => {
         <br />
       </div>
       {shouldShowModal &&
-        (console.log(`correct state at shouldShowModal: ${correct}`),
+        (console.log(`state of correct at shouldShowModal: ${correct}`),
         (
           <Modal
             key={numberOfAttempts}
@@ -352,12 +346,12 @@ const SingleQuestion = () => {
         />
       )} */}
       {showEndModal && (
-      <Modal
-        showEndModal={showEndModal}
-        setShowEndModal={setShowEndModal}
-        gameHasEnded={gameHasEnded}
-        hints={questions[currentQuestionNumber]}
-      />
+        <Modal
+          showEndModal={showEndModal}
+          setShowEndModal={setShowEndModal}
+          gameHasEnded={gameHasEnded}
+          hints={questions[currentQuestionNumber]}
+        />
       )}
     </>
   );
