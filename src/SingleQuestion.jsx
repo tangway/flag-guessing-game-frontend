@@ -119,7 +119,10 @@ const SingleQuestion = () => {
   const [correct, setCorrect] = useState(null);
   const [startAnimation, setStartAnimation] = useState(false);
   const [selectionMade, setSelectionMade] = useState(false);
-  const [currentQuestionNumber, setCurrentQuestionNumber] = useState(0);
+
+  const randomQuestionNumber = Math.floor(Math.random() * 5);
+  const [currentQuestionNumber, setCurrentQuestionNumber] = useState(randomQuestionNumber);
+  // const [currentQuestionNumber, setCurrentQuestionNumber] = useState(0);
   const [correctAnswer, setCorrectAnswer] = useState(
     questions[currentQuestionNumber].answer,
   );
@@ -250,7 +253,7 @@ const SingleQuestion = () => {
       return <h2 className="status-bar-correct">CORRRECT!!</h2>;
     }
     if (playerFailed) {
-      return <h2 className="status-bar">It is {correctAnswer}</h2>;
+      return <h2 className="status-bar">It is {correctAnswer} 😢😢</h2>;
     }
 
     return <h2 className="status-bar">{4 - numberOfAttempts} attempts left</h2>;

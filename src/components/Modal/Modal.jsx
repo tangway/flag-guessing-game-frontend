@@ -47,7 +47,7 @@ const Modal = ({
             {links.map((l, i) => (
               <ul key={i}>
                 <a href={l.url} target="_blank" rel="noopener noreferrer">
-                  {l.title}
+                  ❥{l.title}
                 </a>
               </ul>
             ))}
