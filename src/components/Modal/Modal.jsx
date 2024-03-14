@@ -6,7 +6,7 @@ const Modal = ({
   attempt,
   gameHasEnded,
   hints,
-  showEndModal = false,
+  showEndModal,
   setShowEndModal = () => {},
 }) => {
   const hint1 = hints.timezone;
@@ -40,7 +40,7 @@ const Modal = ({
       >
         {gameHasEnded ? (
           <>
-            <h5>Bit of Trivia: </h5>
+            {/* <h5>Bit of Trivia: </h5> */}
             <h4>{funfact}</h4>
             <br />
             <h5>Links to Explore: </h5>

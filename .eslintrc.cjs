@@ -29,6 +29,7 @@ module.exports = {
     'react/jsx-uses-react': 'off',
     'react/jsx-props-no-spreading': 'off',
     'react/require-default-props': 'off',
+    'react/jsx-one-expression-per-line': 'off',
     'react/function-component-definition': [
       2,
       {

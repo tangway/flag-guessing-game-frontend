@@ -131,6 +131,7 @@ const SingleQuestion = () => {
   const [correctButton, setCorrectButton] = useState(null);
   const [gameHasEnded, setGameHasEnded] = useState(false);
   const [showEndModal, setShowEndModal] = useState(false);
+  const [playerFailed, setPlayerFailed] = useState(false);
 
   // const FlagComponent = AnimatedComponent(
   //   mapOfFlags[questions[currentQuestionNumber].answer],
@@ -184,6 +185,14 @@ const SingleQuestion = () => {
     }
   };
 
+  // to animate the flag when all attempts fail
+  useEffect(() => {
+    if (gameHasEnded) {
+      setStartAnimation(true);
+      setPlayerFailed(true);
+    }
+  }, [gameHasEnded]);
+
   const showEndModalFunc = () => {
     setShowEndModal(true);
   };
@@ -192,6 +201,7 @@ const SingleQuestion = () => {
   //   setButtonsEmpty(false); // Reset buttonsEmpty when the question number changes
   // }, [currentQuestionNumber]);
 
+  // this section is for animating the present emoji after game has ended
   const controls = useAnimation();
 
   // // simple version
@@ -235,6 +245,17 @@ const SingleQuestion = () => {
     }
   }, [numberOfAttempts, correct]);
 
+  const renderStatusMessage = () => {
+    if (correct) {
+      return <h2 className="status-bar-correct">CORRRECT!!</h2>;
+    }
+    if (playerFailed) {
+      return <h2 className="status-bar">It is {correctAnswer}</h2>;
+    }
+
+    return <h2 className="status-bar">{4 - numberOfAttempts} attempts left</h2>;
+  };
+
   return (
     <>
       <MotionDiv
@@ -249,11 +270,7 @@ const SingleQuestion = () => {
           key={currentQuestionNumber}
           variants={nextClicked ? '' : initialLoadVariants}
         >
-          {correct === true ? (
-            <h2 className="status-bar-correct">CORRRECT!!</h2>
-          ) : (
-            <h2 className="status-bar">{4 - numberOfAttempts} attempts left</h2>
-          )}
+          {renderStatusMessage()}
         </MotionDiv>
         {/* <MotionDiv
           className="score"
@@ -269,7 +286,7 @@ const SingleQuestion = () => {
               <motion.button
                 key={`${choice}-${currentQuestionNumber}`}
                 type="button"
-                className={`choice-button ${buttonsEmpty ? 'empty' : ''} ${
+                className={`choice-button ${
                   buttonClicked.includes(choice) ? 'clicked' : ''
                 } ${correctButton === choice ? 'correct-answer' : ''}`}
                 id={`${choice}`}

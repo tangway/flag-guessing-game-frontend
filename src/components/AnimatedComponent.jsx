@@ -56,7 +56,7 @@ const AnimatedComponent = Component => ({ startAnimation, ...props }) => {
       {...props}
       animate={controls}
       initial={{ opacity: 0 }}
-      transition={{ duration: 2, ease: 'easeInOut' }}
+      transition={{ duration: 3, ease: 'easeInOut' }}
     />
   );
 };
