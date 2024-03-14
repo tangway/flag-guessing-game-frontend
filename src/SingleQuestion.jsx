@@ -121,7 +121,8 @@ const SingleQuestion = () => {
   const [selectionMade, setSelectionMade] = useState(false);
 
   const randomQuestionNumber = Math.floor(Math.random() * 5);
-  const [currentQuestionNumber, setCurrentQuestionNumber] = useState(randomQuestionNumber);
+  const [currentQuestionNumber, setCurrentQuestionNumber] =
+    useState(randomQuestionNumber);
   // const [currentQuestionNumber, setCurrentQuestionNumber] = useState(0);
   const [correctAnswer, setCorrectAnswer] = useState(
     questions[currentQuestionNumber].answer,
@@ -349,16 +350,19 @@ const SingleQuestion = () => {
         </div>
         <br />
       </div>
-      {shouldShowModal &&
-        (console.log(`state of correct at shouldShowModal: ${correct}`),
-        (
-          <Modal
-            key={numberOfAttempts}
-            attempt={numberOfAttempts}
-            gameHasEnded={gameHasEnded}
-            hints={questions[currentQuestionNumber]}
-          />
-        ))}
+      <AnimatePresence>
+        {shouldShowModal &&
+          (console.log(`state of correct at shouldShowModal: ${correct}`),
+          (
+            <Modal
+              key={numberOfAttempts}
+              attempt={numberOfAttempts}
+              gameHasEnded={gameHasEnded}
+              hints={questions[currentQuestionNumber]}
+            />
+          ))}
+      </AnimatePresence>
+
       {/* {showEndModal && (
         <Modal
           gameHasEnded={gameHasEnded}

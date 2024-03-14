@@ -1,6 +1,13 @@
 import PropTypes from 'prop-types';
 import { useEffect, useRef } from 'react';
+import { motion } from 'framer-motion';
 import './Modal.scss';
+
+const modalVariants = {
+  hidden: { y: '150%', opacity: 0, scale: 0 }, // Start from the bottom of the screen
+  visible: { x: '-50%', y: '-50%', opacity: 1, scale: 1, transition: { duration: 0.8, ease: 'backInOut' } }, // Slide to the center of the screen
+  exit: { y: '150%', opacity: 0, scale: 0, transition: { duration: 0.8, ease: 'backInOut' } }, // Slide out to the bottom of the screen
+};
 
 const Modal = ({
   attempt,
@@ -33,10 +40,15 @@ const Modal = ({
 
   return (
     <div className="modal-container">
-      <dialog
+      <motion.dialog
         ref={dialogRef}
         className="modal"
         onClose={() => setShowEndModal(!showEndModal)}
+        initial="hidden"
+        animate="visible"
+        exit="exit"
+        variants={modalVariants}
+        transition={{ duration: 0.1 }}
       >
         {gameHasEnded ? (
           <>
@@ -47,7 +59,7 @@ const Modal = ({
             {links.map((l, i) => (
               <ul key={i}>
                 <a href={l.url} target="_blank" rel="noopener noreferrer">
-                  ❥{l.title}
+                  ❥ {l.title}
                 </a>
               </ul>
             ))}
@@ -95,7 +107,7 @@ const Modal = ({
         <button className="close-button" onClick={closeModal} type="button">
           close
         </button>
-      </dialog>
+      </motion.dialog>
     </div>
   );
 };
