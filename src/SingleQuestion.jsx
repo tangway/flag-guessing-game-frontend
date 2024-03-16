@@ -254,7 +254,7 @@ const SingleQuestion = () => {
       return <h2 className="status-bar-correct">CORRRECT!!</h2>;
     }
     if (playerFailed) {
-      return <h2 className="status-bar">It is {correctAnswer} 😢😢</h2>;
+      return <h2 className="status-bar">It's {correctAnswer} 😢😢</h2>;
     }
 
     return <h2 className="status-bar">{4 - numberOfAttempts} attempts left</h2>;

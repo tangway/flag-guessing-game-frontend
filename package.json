@@ -10,8 +10,7 @@
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "test": "jest",
-    "predeploy": "pnpm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "pnpm run build && gh-pages -d dist"
   },
   "dependencies": {
     "framer-motion": "^10.16.16",
