@@ -298,8 +298,8 @@ const SingleQuestion = () => {
                 onClick={checkAnswer}
                 // this disables all buttons when answer is correct or no more attempts left
                 disabled={numberOfAttempts === 4 || correct ? true : false}
-                initial={{ transform: 'scale(0)', opacity: 0 }}
-                animate={{ transform: 'scale(1)', opacity: 1 }}
+                initial={{ scale: 0, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
                 transition={{ duration: 2.5, ease: 'easeInOut' }}
                 exit={{
                   transform: 'scale(0)',
