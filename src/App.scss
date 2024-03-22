@@ -97,7 +97,13 @@ body {
 
   // Adjust the size of the image to be twice the height of the screen,
   // ensuring only the top half is shown
-  @media (width < 500px) {
+  @media (width < 500px)  {
+    background-size: 120vw 150vh;
+    background-position: top 0% right 45%;
+    padding-top: 1vh;
+  }
+  // fallback for browsers that dont support the new comparator syntax
+  @media only screen and (max-width: 500px) {
     background-size: 120vw 150vh;
     background-position: top 0% right 45%;
     padding-top: 1vh;
