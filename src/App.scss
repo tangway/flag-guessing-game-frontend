@@ -59,8 +59,7 @@ $inverted-text-color: $button-bg;
   -webkit-user-select: none;
   touch-action: manipulation;
   white-space: nowrap;
-  will-change: box-shadow, transform;
-  font-size: 18px;
+  font-size: 1.125rem;
 
   &:focus {
     box-shadow:
@@ -89,7 +88,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start; /* is a default setting and is actually not needed */
+  justify-content: flex-start; /* it's a default setting and is actually not needed */
   padding-top: 10vh; /* sets padding to 10% of viewport height */
   background-image: linear-gradient(120deg, #fdfbfb 0%, #9fb4ca 100%);
   background-size: auto 150vh; /* sets the background width to auto and height to 150% of vp so we see more of the white bg*/
@@ -98,16 +97,18 @@ body {
 
   // Adjust the size of the image to be twice the height of the screen,
   // ensuring only the top half is shown
-  @media (max-width: 400px) {
-    background-size: auto 150vh;
+  @media (width < 500px) {
+    background-size: 120vw 150vh;
     background-position: top 0% right 45%;
-    padding-top: 10vh;
+    padding-top: 1vh;
   }
 }
 
 .flag-area {
-  width: 350px;
-  height: 250px;
+  // width: 350px;
+  // height: 250px;
+  width: 320px;
+  height: 228px;
   margin-bottom: 10px;
 }
 
@@ -118,16 +119,26 @@ body {
   align-items: center;
   justify-content: center;
   gap: 10px;
+  // padding: 1rem;
 
   .choices {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(4, 1fr);
+    grid-template-columns: repeat(2, minmax(100px, 1fr));
+    grid-template-rows: repeat(5, 1fr);
     gap: 10px;
-    width: 350px;
+    width: 310px;
+    // width: 30vw;
+    max-width: 350px;
+    // padding: 1rem;
 
     .choice-button {
       @include button-styles($button-bg, $button-text-color, #d6d6e7);
+      // width: 40vw;
+      width: 100%;
+      margin: auto;
+      aspect-ratio: 2.9;
+      // height: 6vh;
+      // font-size: 2.5vw;
     }
 
     .clicked {

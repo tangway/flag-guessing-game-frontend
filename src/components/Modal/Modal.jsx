@@ -4,9 +4,9 @@ import { motion } from 'framer-motion';
 import './Modal.scss';
 
 const modalVariants = {
-  hidden: { y: '150%', opacity: 0, scale: 0 }, // Start from the bottom of the screen
-  visible: { x: '-50%', y: '-50%', opacity: 1, scale: 1, transition: { duration: 0.8, ease: 'backInOut' } }, // Slide to the center of the screen
-  exit: { y: '150%', opacity: 0, scale: 0, transition: { duration: 0.8, ease: 'backInOut' } }, // Slide out to the bottom of the screen
+  hidden: { x: '-50%', y: '150%', scale: 0 }, // Start from the bottom of the screen
+  visible: { x: '-50%', y: '-50%', scale: 1, transition: { duration: 0.7, ease: 'backInOut' } }, // Slide to the center of the screen
+  exit: { x: '-50%', y: '150%', scale: 0, transition: { duration: 0.7, ease: 'backInOut' } }, // Slide out to the bottom of the screen
 };
 
 const Modal = ({
@@ -48,7 +48,7 @@ const Modal = ({
         animate="visible"
         exit="exit"
         variants={modalVariants}
-        transition={{ duration: 0.1 }}
+        // transition={{ duration: 5 }}
       >
         {gameHasEnded ? (
           <>

@@ -3,7 +3,7 @@ import SingleQuestion from './SingleQuestion';
 import MultiQuestion from './MultiQuestion';
 
 const App = () => {
-  // logic to determine which game flow to use
+  // to determine which game flow to use
   const shouldUseSingleQuestionGameFlow = true;
   // const shouldUseSingleQuestionGameFlow = false;
 

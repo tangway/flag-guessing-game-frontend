@@ -63,7 +63,7 @@ const questions = [
       '0.1% other / none',
     ],
     funfact:
-      'The origin of the word "serendipity" comes from the Persians and Arabs name for this island Sarandīb.',
+      'The origin of the word "serendipity" comes from the name Persians and Arabs gave for this island: Sarandīb.',
     links: [
       {
         title: 'Etymology of Serendipity',
@@ -98,7 +98,7 @@ const questions = [
       '9% no religion',
     ],
     funfact:
-      'Albania has over 173,000 bunkers scattered across the country, built during the communist era under the leadership of Enver Hoxha. Albania has a unique traditional music style called "iso-polyphony" that has been recognized by UNESCO as an Intangible Cultural Heritage of Humanity.',
+      'Albania has over 173,000 bunkers scattered across the country, built during the communist era under the leadership of Enver Hoxha. It also has a unique traditional music style called "iso-polyphony" that has been recognized by UNESCO as an Intangible Cultural Heritage of Humanity.',
     links: [
       {
         title: 'Once a state secret, these Albanian bunkers are now museums',
@@ -161,7 +161,7 @@ const questions = [
     population: '45,400,000',
     demographic: ['99% Sunni Islam', '1% other'],
     funfact:
-      "Algeria is the largest country in Africa by land area, covering over 2.3 million square kilometers but 80% of its total land area is the Sahara Desert, making it one of the most desert-dominated countries in the world. Algeria is the only country in the world where the national language, Arabic, is written using the Berber alphabet, known as Tifinagh.",
+      "Algeria is the largest country in Africa by land area, covering over 2.3 million square kilometers but 80% of its total land area is the Sahara Desert, making it one of the most desert-dominated countries in the world. It is the only country in the world where the national language, Arabic, is written using the Berber alphabet, known as Tifinagh.",
     links: [
       {
         title: "M'Zab Valley",
