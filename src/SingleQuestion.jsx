@@ -261,7 +261,7 @@ const SingleQuestion = () => {
   };
 
   return (
-    <>
+    <div className="app-div">
       <MotionDiv
         className="flag-area"
         key={currentQuestionNumber}
@@ -283,9 +283,9 @@ const SingleQuestion = () => {
         >
           Score: {score}/{questions.length}
         </MotionDiv> */}
-        <br />
+        {/* <br /> */}
         <div className="choices">
-          <AnimatePresence mode="wait">
+          <AnimatePresence>
             {questions[currentQuestionNumber].choices.map(choice => (
               <motion.button
                 key={`${choice}-${currentQuestionNumber}`}
@@ -377,7 +377,7 @@ const SingleQuestion = () => {
           hints={questions[currentQuestionNumber]}
         />
       )}
-    </>
+    </div>
   );
 };
 
