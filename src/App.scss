@@ -1,5 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=VT323&display=swap");
 
 /* @link https://utopia.fyi/type/calculator/?c=320,13,1.2,1240,20,1.333,5,2,&s=0.75|0.5|0.25,1.5|2|3|4|6,s-l&g=s,l,xl,12 */
 
@@ -142,7 +142,7 @@ body {
   // height: 100%;
   height: 100vh;
   // height: -webkit-fill-available;
-  
+
   // justify-content: flex-start; /* it's a default setting and is actually not needed */
   padding-top: 5vh;
   //  padding-top: var(--space-3xs);
@@ -156,7 +156,7 @@ body {
 
   // Adjust the size of the image to be twice the height of the screen,
   // ensuring only the top half is shown
-  @media (width < 500px)  {
+  @media (width < 500px) {
     background-size: 120vw 150vh;
     background-position: top 0% right 45%;
     padding-top: 0.5vh;
@@ -173,7 +173,7 @@ body {
 }
 
 .app-div {
-  display:flex;
+  display: flex;
   flex-direction: column;
   align-items: center;
   height: 100dvh;
@@ -195,8 +195,6 @@ body {
     object-fit: cover;
   }
 }
-
-
 
 // all the styles nested within this container wch is also a flex item
 .user-interface {
@@ -295,8 +293,19 @@ body {
     // margin-top: 30px;
 
     .next-button {
-      @include button-styles($inverted-bg, $inverted-text-color, #71718e);
-      background-color: rgb(221 105 45);
+      @include button-styles($inverted-bg, $inverted-text-color, #b8b8b8);
+      color: black;
+      background-color: rgb(224 224 224);
+      padding: var(--space-xs) var(--space-s);
+      margin-top: var(--space-xs);
+    }
+
+    .emoji-button {
+      font-size: 3rem;
+      border: none;
+      background: transparent;
+      padding: 0; 
+      cursor: pointer; // changes the cursor to a pointer on hover
     }
 
     // TODO write properties for next-button active state
@@ -315,6 +324,7 @@ body {
 
   .score {
     font-family: "JetBrains Mono", monospace;
+    font-size: var(--step-0);
   }
 
   .status-bar,

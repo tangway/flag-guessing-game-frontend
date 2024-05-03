@@ -4,8 +4,8 @@ import MultiQuestion from './MultiQuestion';
 
 const App = () => {
   // to determine which game flow to use
-  const shouldUseSingleQuestionGameFlow = true;
-  // const shouldUseSingleQuestionGameFlow = false;
+  // const shouldUseSingleQuestionGameFlow = true;
+  const shouldUseSingleQuestionGameFlow = false;
 
   return (
     <div>
