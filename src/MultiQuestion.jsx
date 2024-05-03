@@ -117,7 +117,7 @@ const MotionDiv = ({ className, children, variants }) => (
 
 const MultiQuestion = () => {
   const [correct, setCorrect] = useState(null);
-  const [startAnimation, setStartAnimation] = useState(false);
+  const [startFlagAnimation, setStartFlagAnimation] = useState(false);
   const [selectionMade, setSelectionMade] = useState(false);
 
   // const randomQuestionNumber = Math.floor(Math.random() * 5);
@@ -155,11 +155,13 @@ const MultiQuestion = () => {
 
   const nextButtonFunc = () => {
     if (currentQuestionNumber === questions.length - 1) {
+      // to end the whole game
       console.log('THE END');
     } else {
+      // resets state for next question
       setCorrect(null);
       setSelectionMade(false);
-      setStartAnimation(false);
+      setStartFlagAnimation(false);
       setCurrentQuestionNumber(currentQuestionNumber + 1);
       setCorrectAnswer(questions[currentQuestionNumber + 1].answer);
       setNextClicked(true);
@@ -175,36 +177,47 @@ const MultiQuestion = () => {
     const target = event.currentTarget;
 
     if (!gameHasEnded) {
+      console.log('in !gameHasEnded if statement');
       target.disabled = true;
       setButtonClicked(buttonClicked.concat(target.id));
-      setNumberOfAttempts(n => n + 1);
+      setNumberOfAttempts(prevNumber => prevNumber + 1);
+      console.log('numberOfAttempts in !gameHasEnded: ', numberOfAttempts);
     }
 
     if (target.textContent === correctAnswer) {
-      // console.log(`in checkAnswer correct answer condition`)
+      // when answer is correct
       setCorrect(true);
       setGameHasEnded(true);
       setCorrectButton(target.id);
       setScore(score + 1);
-      setStartAnimation(true);
+      setStartFlagAnimation(true);
     } else {
+      // when answer is wrong
       setCorrect(false);
     }
   };
 
   // to animate the flag when all player's attempts fail
-  useEffect(() => {
-    if (gameHasEnded) {
-      setStartAnimation(true);
-      setPlayerFailed(true);
-    }
-  }, [gameHasEnded]);
+  // useEffect(() => {
+  //   if (gameHasEnded) {
+  //     setStartFlagAnimation(true);
+  //     setPlayerFailed(true);
+  //   }
+  // }, [gameHasEnded]);
 
   useEffect(() => {
-    if (numberOfAttempts === 4) {
+    console.log('useEffect numberOfAttempts:', numberOfAttempts);
+    if (numberOfAttempts === 4 && correct === false) {
       setGameHasEnded(true);
+      setStartFlagAnimation(true);
+      setPlayerFailed(true);
     }
-  }, [numberOfAttempts]);
+  }, [numberOfAttempts, correct]);
+
+  // debugging for state of correct
+  useEffect(() => {
+    console.log(`current state of correct: ${correct} `);
+  }, [correct]);
 
   const showEndModalFunc = () => {
     setShowEndModal(true);
@@ -229,8 +242,39 @@ const MultiQuestion = () => {
   // }, [numberOfAttempts, correct, controls]);
 
   // 2 step animation sequence for the funfact emoji button
+  // useEffect(() => {
+  //   if (numberOfAttempts === 4 || correct === true) {
+  //     // setGameHasEnded(true);
+
+  //     // first part of animation
+  //     controls.start({
+  //       scale: 1,
+  //       // x: [0, 0],
+  //       // y: [0, 0],
+  //       transition: { duration: 2.5, ease: 'easeInOut', delay: 5 },
+  //     }).then(() => {
+  //       console.log("First part of animation runs.")});
+
+  //     // second part of animation
+  //     // the timeout value has to be longer than the duration+delay in the first
+  //     // part of animation otherwise the second part will override the first part
+  //     setTimeout(() => {
+  //       controls.start({
+  //         // scale: [1, 0.9, 1.1, 1], // shake scale values
+  //         scale: [1, 0.8, 1],
+  //         transition: {
+  //           duration: 2.5,
+  //           repeat: 'Infinity',
+  //           repeatType: 'reverse',
+  //           ease: 'easeInOut',
+  //         },
+  //       });
+  //     }, 7600);
+  //   }
+  // }, [numberOfAttempts, correct]);
+
   useEffect(() => {
-    if (numberOfAttempts === 4 || correct === true) {
+    if (numberOfAttempts === 4) {
       // setGameHasEnded(true);
 
       // first part of animation
@@ -239,14 +283,15 @@ const MultiQuestion = () => {
         // x: [0, 0],
         // y: [0, 0],
         transition: { duration: 2.5, ease: 'easeInOut', delay: 5 },
-      });
+      }).then(() => {
+        console.log("First part of animation runs.")});
 
       // second part of animation
       // the timeout value has to be longer than the duration+delay in the first
       // part of animation otherwise the second part will override the first part
       setTimeout(() => {
         controls.start({
-          // scale: [1, 0.9, 1.1, 1], // Shake scale values
+          // scale: [1, 0.9, 1.1, 1], // shake scale values
           scale: [1, 0.8, 1],
           transition: {
             duration: 2.5,
@@ -257,7 +302,38 @@ const MultiQuestion = () => {
         });
       }, 7600);
     }
-  }, [numberOfAttempts, correct]);
+  }, [numberOfAttempts]);
+
+  useEffect(() => {
+    if (correct === true) {
+      // setGameHasEnded(true);
+
+      // first part of animation
+      controls.start({
+        scale: 1,
+        // x: [0, 0],
+        // y: [0, 0],
+        transition: { duration: 2.5, ease: 'easeInOut', delay: 5 },
+      }).then(() => {
+        console.log("First part of animation runs.")});
+
+      // second part of animation
+      // the timeout value has to be longer than the duration+delay in the first
+      // part of animation otherwise the second part will override the first part
+      setTimeout(() => {
+        controls.start({
+          // scale: [1, 0.9, 1.1, 1], // shake scale values
+          scale: [1, 0.8, 1],
+          transition: {
+            duration: 2.5,
+            repeat: 'Infinity',
+            repeatType: 'reverse',
+            ease: 'easeInOut',
+          },
+        });
+      }, 7600);
+    }
+  }, [correct]);
 
   const renderStatusMessage = () => {
     if (correct) {
@@ -277,7 +353,7 @@ const MultiQuestion = () => {
         key={`flag-${currentQuestionNumber}`}
         variants={nextClicked ? '' : initialLoadVariants}
       >
-        <FlagComponent startAnimation={startAnimation} />
+        <FlagComponent startFlagAnimation={startFlagAnimation} />
       </MotionDiv>
       <div className="user-interface">
         <MotionDiv

@@ -36,11 +36,11 @@ import { useAnimation } from 'framer-motion';
 // export default AnimatedComponent;
 
 // version without buttons and with useEffect triggered by startAnimation
-const AnimatedComponent = Component => ({ startAnimation, ...props }) => {
+const AnimatedComponent = Component => ({ startFlagAnimation, ...props }) => {
   const controls = useAnimation();
 
   useEffect(() => {
-    if (startAnimation) {
+    if (startFlagAnimation) {
       controls.start({
         opacity: 1,
       });
@@ -49,7 +49,7 @@ const AnimatedComponent = Component => ({ startAnimation, ...props }) => {
         opacity: 0,
       });
     }
-  }, [startAnimation]);
+  }, [startFlagAnimation]);
 
   return (
     <Component
