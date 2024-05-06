@@ -424,7 +424,7 @@ const MultiQuestion = () => {
         >
           Score: {score}/{questions.length}
         </MotionDiv>
-        <br />
+        {/* <br /> */}
         <div className="choices">
           <AnimatePresence key={currentQuestionNumber}>
             {questions[currentQuestionNumber].choices.map(choice => (
