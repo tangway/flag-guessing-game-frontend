@@ -64,36 +64,34 @@ import AnimatedComponent from './components/AnimatedComponent';
 // };
 
 // scale in animation
-const initialLoadVariants = {
-  hidden: {
-    opacity: 0,
-    scale: 0,
-    // rotate: 60,
-  },
-  visible: {
-    opacity: 1,
-    scale: 1,
-    // rotate: 0,
-    transition: {
-      duration: 2.5,
-      ease: 'easeInOut',
-    },
-  },
-};
+// const initialLoadVariants = {
+//   hidden: {
+//     opacity: 0,
+//     scale: 0,
+//   },
+//   visible: {
+//     opacity: 1,
+//     scale: 1,
+//     transition: {
+//       duration: 2.5,
+//       ease: 'easeInOut',
+//     },
+//   },
+// };
 
 // for animation when user clicks Next button but it is currently not working
 // can be enabled with conditional rendering of variants
-const nextClickedVariants = {
-  hidden: { width: '0px', opacity: 0 },
-  visible: {
-    width: '200px',
-    opacity: 1,
-    transition: {
-      width: { duration: 1, ease: 'easeInOut' },
-      opacity: { duration: 1, ease: 'easeInOut' },
-    },
-  },
-};
+// const nextClickedVariants = {
+//   hidden: { width: '0px', opacity: 0 },
+//   visible: {
+//     width: '200px',
+//     opacity: 1,
+//     transition: {
+//       width: { duration: 1, ease: 'easeInOut' },
+//       opacity: { duration: 1, ease: 'easeInOut' },
+//     },
+//   },
+// };
 
 // const buttonPopUpVariant = {
 //   hidden: {
@@ -104,12 +102,33 @@ const nextClickedVariants = {
 //   },
 // };
 
-const MotionDiv = ({ className, children, variants }) => (
+// prev working MotionDiv
+// const MotionDiv = ({ className, children, variants }) => (
+//   <motion.div
+//     className={className}
+//     variants={variants}
+//     initial="hidden"
+//     animate="visible"
+//   >
+//     {children}
+//   </motion.div>
+// );
+
+// updated to include exit animation
+const MotionDiv = ({
+  className,
+  children,
+  initial,
+  animate,
+  transition,
+  exit,
+}) => (
   <motion.div
     className={className}
-    variants={variants}
-    initial="hidden"
-    animate="visible"
+    initial={initial}
+    animate={animate}
+    transition={transition}
+    exit={exit}
   >
     {children}
   </motion.div>
@@ -170,6 +189,7 @@ const MultiQuestion = () => {
       setShowEndModal(null);
       setPlayerFailed(false);
       setNumberOfAttempts(0);
+      setButtonClicked([]);
     }
   };
 
@@ -278,13 +298,16 @@ const MultiQuestion = () => {
       // setGameHasEnded(true);
 
       // first part of animation
-      controls.start({
-        scale: 1,
-        // x: [0, 0],
-        // y: [0, 0],
-        transition: { duration: 2.5, ease: 'easeInOut', delay: 5 },
-      }).then(() => {
-        console.log("First part of animation runs.")});
+      controls
+        .start({
+          scale: 1,
+          // x: [0, 0],
+          // y: [0, 0],
+          transition: { duration: 2.5, ease: 'easeInOut', delay: 5 },
+        })
+        .then(() => {
+          console.log('First part of animation runs.');
+        });
 
       // second part of animation
       // the timeout value has to be longer than the duration+delay in the first
@@ -309,13 +332,16 @@ const MultiQuestion = () => {
       // setGameHasEnded(true);
 
       // first part of animation
-      controls.start({
-        scale: 1,
-        // x: [0, 0],
-        // y: [0, 0],
-        transition: { duration: 2.5, ease: 'easeInOut', delay: 5 },
-      }).then(() => {
-        console.log("First part of animation runs.")});
+      controls
+        .start({
+          scale: 1,
+          // x: [0, 0],
+          // y: [0, 0],
+          transition: { duration: 2.5, ease: 'easeInOut', delay: 5 },
+        })
+        .then(() => {
+          console.log('First part of animation runs.');
+        });
 
       // second part of animation
       // the timeout value has to be longer than the duration+delay in the first
@@ -343,29 +369,58 @@ const MultiQuestion = () => {
       return <h2 className="status-bar">It's {correctAnswer} 😢😢</h2>;
     }
 
-    return <h2 className="status-bar">{4 - numberOfAttempts} of 4 attempts left</h2>;
+    return (
+      <h2 className="status-bar">{4 - numberOfAttempts} of 4 attempts left</h2>
+    );
   };
 
   return (
     <div className="app-div">
-      <MotionDiv
+      {/* <MotionDiv
         className="flag-area"
         key={`flag-${currentQuestionNumber}`}
         variants={nextClicked ? '' : initialLoadVariants}
+      >
+        <FlagComponent startFlagAnimation={startFlagAnimation} />
+      </MotionDiv> */}
+      <MotionDiv
+        className="flag-area"
+        key={`flag-${currentQuestionNumber}`}
+        initial={{ scale: 0, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        transition={{ duration: 2.5, ease: 'easeInOut' }}
+        exit={{
+          scale: 0,
+          transition: { duration: 1.3, ease: 'easeInOut' },
+        }}
       >
         <FlagComponent startFlagAnimation={startFlagAnimation} />
       </MotionDiv>
       <div className="user-interface">
         <MotionDiv
           key={`status-${currentQuestionNumber}`}
-          variants={nextClicked ? '' : initialLoadVariants}
+          // variants={nextClicked ? '' : initialLoadVariants}
+          initial={{ scale: 0, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 2.5, ease: 'easeInOut' }}
+          exit={{
+            scale: 0,
+            transition: { duration: 1.3, ease: 'easeInOut' },
+          }}
         >
           {renderStatusMessage()}
         </MotionDiv>
         <MotionDiv
           className="score"
           key={`score-${currentQuestionNumber}`}
-          variants={nextClicked ? '' : initialLoadVariants}
+          // variants={nextClicked ? '' : initialLoadVariants}
+          initial={{ scale: 0, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 2.5, ease: 'easeInOut' }}
+          exit={{
+            scale: 0,
+            transition: { duration: 1.3, ease: 'easeInOut' },
+          }}
         >
           Score: {score}/{questions.length}
         </MotionDiv>
@@ -445,7 +500,7 @@ const MultiQuestion = () => {
                 transition={{ duration: 1.2, ease: 'easeInOut' }}
                 exit={{ scale: 0 }}
               >
-                Next
+                {currentQuestionNumber === questions.length - 1 ? 'GAME OVER' : 'Next'}
               </motion.button>
             ) : gameHasEnded === true ? (
               <motion.button
@@ -455,6 +510,7 @@ const MultiQuestion = () => {
                 onClick={showEndModalFunc}
                 initial={{ scale: 0 }}
                 animate={controls}
+                // exit={{ scale: 0 }}
               >
                 🎁
               </motion.button>
@@ -464,15 +520,14 @@ const MultiQuestion = () => {
         <br />
       </div>
       <AnimatePresence>
-        {shouldShowModal &&
-          (
-            <Modal
-              key={numberOfAttempts}
-              attempt={numberOfAttempts}
-              gameHasEnded={gameHasEnded}
-              hints={questions[currentQuestionNumber]}
-            />
-          )}
+        {shouldShowModal && (
+          <Modal
+            key={numberOfAttempts}
+            attempt={numberOfAttempts}
+            gameHasEnded={gameHasEnded}
+            hints={questions[currentQuestionNumber]}
+          />
+        )}
       </AnimatePresence>
 
       {/* {showEndModal && (
