@@ -188,6 +188,10 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  // flex-grow: 1;
+  // flex-basis: 0;
+  // flex-shrink: 1;
+  // height: 30dvh;
 
   svg {
     width: 100%;

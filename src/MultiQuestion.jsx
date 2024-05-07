@@ -383,50 +383,56 @@ const MultiQuestion = () => {
       >
         <FlagComponent startFlagAnimation={startFlagAnimation} />
       </MotionDiv> */}
-      <MotionDiv
-        className="flag-area"
-        key={`flag-${currentQuestionNumber}`}
-        initial={{ scale: 0, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ duration: 2.5, ease: 'easeInOut' }}
-        exit={{
-          scale: 0,
-          transition: { duration: 1.3, ease: 'easeInOut' },
-        }}
-      >
-        <FlagComponent startFlagAnimation={startFlagAnimation} />
-      </MotionDiv>
       <div className="user-interface">
-        <MotionDiv
-          key={`status-${currentQuestionNumber}`}
-          // variants={nextClicked ? '' : initialLoadVariants}
-          initial={{ scale: 0, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 2.5, ease: 'easeInOut' }}
-          exit={{
-            scale: 0,
-            transition: { duration: 1.3, ease: 'easeInOut' },
-          }}
-        >
-          {renderStatusMessage()}
-        </MotionDiv>
-        <MotionDiv
-          className="score"
-          key={`score-${currentQuestionNumber}`}
-          // variants={nextClicked ? '' : initialLoadVariants}
-          initial={{ scale: 0, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 2.5, ease: 'easeInOut' }}
-          exit={{
-            scale: 0,
-            transition: { duration: 1.3, ease: 'easeInOut' },
-          }}
-        >
-          Score: {score}/{questions.length}
-        </MotionDiv>
+        <AnimatePresence mode="wait">
+          <MotionDiv
+            className="flag-area"
+            key={`flag-${currentQuestionNumber}`}
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 2.5, ease: 'easeInOut' }}
+            exit={{
+              scale: 0,
+              transition: { duration: 1.3, ease: 'easeInOut' },
+            }}
+          >
+            <FlagComponent startFlagAnimation={startFlagAnimation} />
+          </MotionDiv>
+        </AnimatePresence>
+        <AnimatePresence mode="wait">
+          <MotionDiv
+            key={`status-${currentQuestionNumber}`}
+            // variants={nextClicked ? '' : initialLoadVariants}
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 2.5, ease: 'easeInOut' }}
+            exit={{
+              scale: 0,
+              transition: { duration: 1.3, ease: 'easeInOut' },
+            }}
+          >
+            {renderStatusMessage()}
+          </MotionDiv>
+        </AnimatePresence>
+        <AnimatePresence mode="wait">
+          <MotionDiv
+            className="score"
+            key={`score-${currentQuestionNumber}`}
+            // variants={nextClicked ? '' : initialLoadVariants}
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 2.5, ease: 'easeInOut' }}
+            exit={{
+              scale: 0,
+              transition: { duration: 1.3, ease: 'easeInOut' },
+            }}
+          >
+            Score: {score}/{questions.length}
+          </MotionDiv>
+        </AnimatePresence>
         {/* <br /> */}
         <div className="choices">
-          <AnimatePresence key={currentQuestionNumber}>
+          {/* <AnimatePresence key={currentQuestionNumber} mode="wait">
             {questions[currentQuestionNumber].choices.map(choice => (
               <motion.button
                 key={`${choice}-${currentQuestionNumber}`}
@@ -451,7 +457,31 @@ const MultiQuestion = () => {
                 <span className="choice-text">{choice}</span>
               </motion.button>
             ))}
-          </AnimatePresence>
+          </AnimatePresence> */}
+          {questions[currentQuestionNumber].choices.map(choice => (
+            <AnimatePresence mode="wait">
+              <motion.button
+                key={`${choice}-${currentQuestionNumber}`}
+                type="button"
+                className={`choice-button ${
+                  buttonClicked.includes(choice) ? 'clicked' : ''
+                } ${correctButton === choice ? 'correct-answer' : ''}`}
+                id={`${choice}`}
+                onClick={checkAnswer}
+                disabled={numberOfAttempts === 4 || correct ? true : false}
+                initial={{ scale: 0, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ duration: 2.5, ease: 'easeInOut' }}
+                exit={{
+                  scale: 0,
+                  transition: { duration: 1.3, ease: 'easeInOut' },
+                }}
+                layout
+              >
+                <span className="choice-text">{choice}</span>
+              </motion.button>
+            </AnimatePresence>
+          ))}
         </div>
         <div className="next-button-container">
           {/* <MotionDiv
@@ -487,7 +517,7 @@ const MultiQuestion = () => {
             Next
           </motion.button> */}
 
-          <AnimatePresence>
+          <AnimatePresence mode="wait">
             {/* eslint-disable-next-line no-nested-ternary */}
             {showEndModal === false ? (
               <motion.button
@@ -500,7 +530,9 @@ const MultiQuestion = () => {
                 transition={{ duration: 1.2, ease: 'easeInOut' }}
                 exit={{ scale: 0 }}
               >
-                {currentQuestionNumber === questions.length - 1 ? 'GAME OVER' : 'Next'}
+                {currentQuestionNumber === questions.length - 1
+                  ? 'GAME OVER'
+                  : 'Next'}
               </motion.button>
             ) : gameHasEnded === true ? (
               <motion.button
@@ -510,7 +542,7 @@ const MultiQuestion = () => {
                 onClick={showEndModalFunc}
                 initial={{ scale: 0 }}
                 animate={controls}
-                // exit={{ scale: 0 }}
+                exit={{ scale: 0 }}
               >
                 🎁
               </motion.button>
@@ -519,7 +551,7 @@ const MultiQuestion = () => {
         </div>
         <br />
       </div>
-      <AnimatePresence>
+      <AnimatePresence mode="wait">
         {shouldShowModal && (
           <Modal
             key={numberOfAttempts}
