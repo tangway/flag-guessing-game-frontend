@@ -53,7 +53,7 @@ const Modal = ({
         {gameHasEnded ? (
           <>
             {/* <h5>Bit of Trivia: </h5> */}
-            <h4>{funfact}</h4>
+            <h4 className="funfact">{funfact}</h4>
             <br />
             <h5>Links to Explore: </h5>
             {links.map((l, i) => (

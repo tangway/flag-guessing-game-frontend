@@ -2,7 +2,7 @@
 // individualized animation parameters can stay in the svg react components
 
 import React, { useState, useEffect, useMemo } from 'react';
-import { motion, AnimatePresence, useAnimation } from 'framer-motion';
+import { motion, AnimatePresence, useAnimationControls } from 'framer-motion';
 // import { MagicMotion } from 'react-magic-motion';
 import questions from './questions';
 import mapOfFlags from './components/mapOfFlags';
@@ -200,7 +200,16 @@ const MultiQuestion = () => {
       console.log('in !gameHasEnded if statement');
       target.disabled = true;
       setButtonClicked(buttonClicked.concat(target.id));
-      setNumberOfAttempts(prevNumber => prevNumber + 1);
+      // setNumberOfAttempts(prevNumber => prevNumber + 1);
+      setNumberOfAttempts(prevNumber => {
+        const newNumber = prevNumber + 1;
+        if (newNumber === 4 && correct === false) {
+          setGameHasEnded(true);
+          setStartFlagAnimation(true);
+          setPlayerFailed(true);
+        }
+        return newNumber;
+      });
       console.log('numberOfAttempts in !gameHasEnded: ', numberOfAttempts);
     }
 
@@ -225,14 +234,15 @@ const MultiQuestion = () => {
   //   }
   // }, [gameHasEnded]);
 
-  useEffect(() => {
-    console.log('useEffect numberOfAttempts:', numberOfAttempts);
-    if (numberOfAttempts === 4 && correct === false) {
-      setGameHasEnded(true);
-      setStartFlagAnimation(true);
-      setPlayerFailed(true);
-    }
-  }, [numberOfAttempts, correct]);
+// state changes combined together when attempts hit 4
+  // useEffect(() => {
+  //   console.log('useEffect numberOfAttempts:', numberOfAttempts);
+  //   if (numberOfAttempts === 4 && correct === false) {
+  //     setGameHasEnded(true);
+  //     setStartFlagAnimation(true);
+  //     setPlayerFailed(true);
+  //   }
+  // }, [numberOfAttempts, correct]);
 
   // debugging for state of correct
   useEffect(() => {
@@ -247,8 +257,9 @@ const MultiQuestion = () => {
   //   setButtonsEmpty(false); // Reset buttonsEmpty when the question number changes
   // }, [currentQuestionNumber]);
 
-  // this section is for animating the present emoji after game has ended
-  const controls = useAnimation();
+  // this section is for animating the funfact emoji after game has ended
+  // const controls = useAnimation();
+  const controls = useAnimationControls();
 
   // // simple version
   // useEffect(() => {
@@ -393,7 +404,7 @@ const MultiQuestion = () => {
             transition={{ duration: 2.5, ease: 'easeInOut' }}
             exit={{
               scale: 0,
-              transition: { duration: 1.3, ease: 'easeInOut' },
+              transition: { duration: 0.8, ease: 'easeInOut' },
             }}
           >
             <FlagComponent startFlagAnimation={startFlagAnimation} />
@@ -408,7 +419,7 @@ const MultiQuestion = () => {
             transition={{ duration: 2.5, ease: 'easeInOut' }}
             exit={{
               scale: 0,
-              transition: { duration: 1.3, ease: 'easeInOut' },
+              transition: { duration: 0.8, ease: 'easeInOut' },
             }}
           >
             {renderStatusMessage()}
@@ -424,7 +435,7 @@ const MultiQuestion = () => {
             transition={{ duration: 2.5, ease: 'easeInOut' }}
             exit={{
               scale: 0,
-              transition: { duration: 1.3, ease: 'easeInOut' },
+              transition: { duration: 0.8, ease: 'easeInOut' },
             }}
           >
             Score: {score}/{questions.length}
@@ -474,7 +485,7 @@ const MultiQuestion = () => {
                 transition={{ duration: 2.5, ease: 'easeInOut' }}
                 exit={{
                   scale: 0,
-                  transition: { duration: 1.3, ease: 'easeInOut' },
+                  transition: { duration: 0.8, ease: 'easeInOut' },
                 }}
                 layout
               >
@@ -528,7 +539,7 @@ const MultiQuestion = () => {
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
                 transition={{ duration: 1.2, ease: 'easeInOut' }}
-                exit={{ scale: 0 }}
+                exit={{ scale: 0, transition: { duration: 0.8, ease: 'easeInOut' } }}
               >
                 {currentQuestionNumber === questions.length - 1
                   ? 'GAME OVER'
@@ -542,7 +553,7 @@ const MultiQuestion = () => {
                 onClick={showEndModalFunc}
                 initial={{ scale: 0 }}
                 animate={controls}
-                exit={{ scale: 0 }}
+                exit={{ scale: 0, transition: { duration: 0.8, ease: 'easeInOut' } }}
               >
                 🎁
               </motion.button>
